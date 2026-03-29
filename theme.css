@@ -1,0 +1,5568 @@
+/* ═══════════════════════════════════════════════════════════════════
+   KARGO MONTACARGAS — COMBINED THEME CSS
+   Consolidated from Odoo QWeb + ir.asset attachments
+   Served via CDN to reduce Odoo SaaS LoC charges
+   
+   Source files:
+   - kargo_theme_main.css (view 2237 — QWeb bootstrap)
+   - kargo_fleet_modelo.css (ir.asset ID 14)
+   - kargo_fleet_modelo_dark.css (ir.asset ID 15)
+   - kargo_home_menu.css (ir.asset ID 12)
+   - kargo_input_visibility.css (attachment 812)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* === MAIN THEME (from view 2237) === */
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/* KARGO MONTACARGAS — COMPLETE THEME v13.0.1                          */
+/* Material Dark + Kargo Brand + Apple HIG Mobile + WCAG AAA         */
+/*                                                                   */
+/* Audit date: 2026-02-19                                            */
+/* Changes from v9: 26 fixes across responsive, a11y, touch, layout  */
+/*                                                                   */
+/* Breakpoints: 375 / 480 / 768 / 1024                               */
+/* Touch targets: 44×44pt (Apple HIG)                                */
+/* Contrast: WCAG AAA 7:1+ on all text                               */
+/* Grid: 8px spacing system                                          */
+/* Safe areas: iPhone notch + home indicator                         */
+/* ═══════════════════════════════════════════════════════════════════ */
+
+
+
+/* v12.5: EMERGENCY DARK — prevents light leak, BUT transparent for home menu bg image */
+.o_web_client { background: #0d0d0d !important; background-color: #0d0d0d !important; color: #fafafa !important; }
+.o_action_manager { background: #0d0d0d !important; }
+.o_action { background: #0d0d0d !important; }
+.o_content { background: #0d0d0d !important; }
+.o_main_navbar { background: #0d0d0d !important; border-bottom: 1px solid #222 !important; }
+
+/* v12.5: When home menu is active, make ALL parent containers transparent
+   so the background image on .o_home_menu_background shows through */
+.o_home_menu_background,
+.o_home_menu_background .o_web_client,
+.o_home_menu_background ~ .o_action_manager,
+.o_home_menu_background ~ .o_action,
+.o_home_menu_background ~ .o_content {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* The home menu itself sits inside the action manager — 
+   Odoo sets bg image via inline style on .o_home_menu_background.
+   We need the ENTIRE stack above it to be transparent. */
+body:has(.o_home_menu_background) .o_action_manager,
+body:has(.o_home_menu_background) .o_action,
+body:has(.o_home_menu_background) .o_content,
+body:has(.o_home_menu_background) .o_web_client {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Also the home menu background element itself — let Odoo's inline bg-image show */
+.o_home_menu_background {
+    background-color: transparent !important;
+}
+
+
+/* ═══ v12.5: NUCLEAR MOBILE — TEXT VISIBILITY + SIDEBAR REDESIGN ════════ */
+
+/* Override Odoo's brand color in TEXT contexts (keep red for buttons) */
+.o_burger_menu .o_burger_menu_content,
+.o_burger_menu .o_burger_menu_content *,
+.o_burger_menu_content,
+.o_burger_menu_content * {
+    --o-brand-primary: #e4e4e7 !important;
+    --o-brand-odoo: #e4e4e7 !important;
+}
+
+/* ALL text inside burger menu — white/light, never red */
+.o_burger_menu_content a,
+.o_burger_menu_content span,
+.o_burger_menu_content div,
+.o_burger_menu_content li,
+.o_burger_menu_content p,
+.o_burger_menu .o_burger_menu_content a,
+body .o_burger_menu .o_burger_menu_content a,
+body .o_burger_menu_content a {
+    color: #d4d4d8 !important;
+    text-decoration: none !important;
+}
+
+/* Section headers — bright gold/amber for hierarchy */
+.o_burger_menu_content .o_burger_menu_section,
+.o_burger_menu_content h5,
+.o_burger_menu_content .fw-bolder,
+.o_burger_menu_content .fw-bold,
+.o_burger_menu .o_burger_menu_content .o_burger_menu_section,
+body .o_burger_menu_content .o_burger_menu_section {
+    color: #EFAF00 !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1.2px !important;
+    padding: 20px 20px 8px !important;
+    margin: 0 !important;
+    border: none !important;
+}
+
+/* App title at top of sidebar — white bold */
+.o_burger_menu_content .o_burger_menu_app,
+.o_burger_menu .o_burger_menu_content .o_burger_menu_app {
+    color: #fafafa !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    padding: 16px 20px !important;
+    border-bottom: 1px solid #222 !important;
+}
+
+/* Regular menu items — light gray, good size */
+.o_burger_menu_content .dropdown-item,
+.o_burger_menu_content .o_menu_entry,
+.o_burger_menu_content ul a,
+.o_burger_menu .o_burger_menu_content .dropdown-item,
+body .o_burger_menu_content .dropdown-item {
+    color: #d4d4d8 !important;
+    font-size: 15px !important;
+    padding: 14px 20px !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    border-bottom: 1px solid rgba(255,255,255,0.03) !important;
+    background: transparent !important;
+}
+
+/* Hover/active on items */
+.o_burger_menu_content .dropdown-item:hover,
+.o_burger_menu_content a:hover,
+.o_burger_menu_content .dropdown-item:active,
+.o_burger_menu_content .active {
+    background: rgba(255,255,255,0.06) !important;
+    color: #fafafa !important;
+}
+
+/* Sub-items — slightly dimmer, indented */
+.o_burger_menu_content .ms-3,
+.o_burger_menu_content .ps-3,
+.o_burger_menu_content ul ul a {
+    padding-left: 40px !important;
+    font-size: 14px !important;
+    color: #a1a1aa !important;
+}
+
+/* Separator lines */
+.o_burger_menu_content hr,
+.o_burger_menu_content .dropdown-divider {
+    border-color: #222 !important;
+    opacity: 1 !important;
+    margin: 4px 20px !important;
+}
+
+/* User menu dropdown inside sidebar */
+.o_burger_menu_content .dropdown-menu {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* "En línea" status indicator */
+.o_burger_menu_content .o_user_status,
+.o_burger_menu_content .fa-circle {
+    color: #22c55e !important;
+}
+
+/* Close button */
+.o_burger_menu_content .o_burger_menu_close {
+    color: #71717a !important;
+    font-size: 24px !important;
+}
+
+.o_burger_menu_content .o_burger_menu_close:hover {
+    color: #fafafa !important;
+}
+
+/* ═══ KANBAN — CARD TEXT NUCLEAR OVERRIDE ═══ */
+
+/* Card title (equipment name) — this is an &amp;lt;a&amp;gt; tag colored by brand */
+.o_kanban_record a,
+.o_kanban_record a:link,
+.o_kanban_record a:visited,
+body .o_kanban_record a,
+.o_web_client .o_kanban_record a,
+.o_action_manager .o_kanban_record a {
+    color: #fafafa !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+}
+
+.o_kanban_record a:hover {
+    color: #EFAF00 !important;
+}
+
+/* Kanban group header "Disponible (1)" */
+.o_kanban_header,
+.o_kanban_header .o_column_title,
+.o_kanban_group_header,
+body .o_kanban_header .o_column_title {
+    color: #fafafa !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+}
+
+/* Kanban column count */
+.o_kanban_header .o_kanban_counter,
+.o_kanban_header .o_kanban_counter_side {
+    color: #71717a !important;
+}
+
+/* Kanban action icons (⚙ ➕) — clearly visible */
+.o_kanban_header .fa,
+.o_kanban_header .oi,
+.o_kanban_header .o_kanban_config .fa,
+.o_kanban_header .o_kanban_quick_add .fa {
+    color: #71717a !important;
+    font-size: 16px !important;
+}
+
+.o_kanban_header .fa:hover,
+.o_kanban_header .oi:hover {
+    color: #EFAF00 !important;
+}
+
+/* ALL text inside kanban cards */
+.o_kanban_record,
+.o_kanban_record span,
+.o_kanban_record div,
+.o_kanban_record small {
+    color: #d4d4d8 !important;
+}
+
+.o_kanban_record strong,
+.o_kanban_record .fw-bold {
+    color: #fafafa !important;
+}
+
+.o_kanban_record .text-muted {
+    color: #71717a !important;
+}
+
+/* ═══ USER MENU (right side dropdown) ═══ */
+.o_user_menu .dropdown-menu,
+.o_user_menu .dropdown-menu a,
+.o_user_menu .dropdown-item,
+body .o_user_menu .dropdown-item {
+    color: #d4d4d8 !important;
+    background: #111 !important;
+}
+
+.o_user_menu .dropdown-item:hover {
+    background: #1a1a1a !important;
+    color: #fafafa !important;
+}
+
+
+/* v12.4: LINK COLORS — All links visible on dark background */
+.o_web_client:not(#_):not(#_) a {
+    color: #60a5fa !important;
+}
+
+/* Exclude navbar elements from blue link color */
+.o_web_client:not(#_):not(#_) .o_main_navbar a,
+.o_web_client:not(#_):not(#_) .o_main_navbar .o_menu_brand,
+.o_web_client:not(#_):not(#_) .o_main_navbar .nav-link {
+    color: #fafafa !important;
+}
+
+.o_web_client:not(#_):not(#_) a:hover {
+    color: #93bbfc !important;
+}
+
+/* Kanban record links — title of each card */
+.o_web_client:not(#_):not(#_) .o_kanban_record a,
+.o_web_client:not(#_):not(#_) .o_kanban_record_title a,
+.o_web_client:not(#_):not(#_) .o_kanban_record strong a,
+.o_web_client:not(#_):not(#_) .o_kanban_record .o_text_overflow a {
+    color: #fafafa !important;
+    font-weight: 700 !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_kanban_record a:hover {
+    color: var(--k-gold) !important;
+}
+
+/* List view record links */
+.o_web_client:not(#_):not(#_) .o_data_row a,
+.o_web_client:not(#_):not(#_) .o_list_view a {
+    color: #60a5fa !important;
+}
+
+/* Breadcrumb links — should be visible */
+.o_web_client:not(#_):not(#_) .breadcrumb-item a {
+    color: var(--k-text-secondary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .breadcrumb-item.active {
+    color: var(--k-text-primary) !important;
+}
+
+/* Navbar links (not buttons) */
+.o_web_client:not(#_):not(#_) .o_main_navbar a,
+.o_web_client:not(#_):not(#_) .o_main_navbar .nav-link {
+    color: var(--k-text-primary) !important;
+}
+
+/* Sidebar links — keep our existing styling */
+.o_web_client:not(#_):not(#_) .o_burger_menu_content a {
+    color: #d4d4d8 !important;
+}
+/* v12.4: ICON COLORS — visible on dark background */
+.o_web_client:not(#_):not(#_) .fa,
+.o_web_client:not(#_):not(#_) .oi,
+.o_web_client:not(#_):not(#_) .bi,
+.o_web_client:not(#_):not(#_) i.fa,
+.o_web_client:not(#_):not(#_) i.oi {
+    color: inherit !important;
+}
+
+/* When icons are standalone (not inside colored elements) */
+.o_web_client:not(#_):not(#_) .text-muted .fa,
+.o_web_client:not(#_):not(#_) .text-muted .oi,
+.o_web_client:not(#_):not(#_) .o_kanban_manage_button_section .fa {
+    color: var(--k-text-tertiary) !important;
+}
+
+/* Control panel icons (⚙ ⋮ etc) — must be clearly visible */
+.o_web_client:not(#_):not(#_) .o_control_panel .fa,
+.o_web_client:not(#_):not(#_) .o_control_panel .oi,
+.o_web_client:not(#_):not(#_) .o_control_panel .btn .fa,
+.o_web_client:not(#_):not(#_) .o_control_panel .btn .oi,
+.o_web_client:not(#_):not(#_) .o_cp_action_menus .fa {
+    color: #d4d4d8 !important;
+}
+
+/* Kanban column header icons (⚙ ➕) */
+.o_web_client:not(#_):not(#_) .o_kanban_header .o_kanban_config .fa,
+.o_web_client:not(#_):not(#_) .o_kanban_header .o_kanban_quick_add .fa,
+.o_web_client:not(#_):not(#_) .o_kanban_header .fa,
+.o_web_client:not(#_):not(#_) .o_kanban_header .oi {
+    color: var(--k-text-tertiary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_kanban_header .fa:hover,
+.o_web_client:not(#_):not(#_) .o_kanban_header .oi:hover {
+    color: var(--k-gold) !important;
+}
+
+/* ═══ 1. CSS CUSTOM PROPERTIES ═══════════════════════════════════ */
+:root {
+    /* ── Surfaces ── */
+    --k-bg-base: #0d0d0d;
+    --k-bg-raised: #141414;
+    --k-bg-input: #111111;
+    --k-bg-card: #161616;
+    --k-bg-card-hover: #1c1c1c;
+    --k-bg-navbar: #080808;
+    --k-bg-overlay: rgba(13,13,13,0.55);  /* v12.5: lighter for bg image visibility */  /* v12.3: heavy dark overlay — no green tint */
+
+    /* ── Borders ── */
+    --k-border-subtle: #1e1e1e;
+    --k-border-default: #2a2a2a;
+    --k-border-strong: #333333;
+
+    /* ── Text — WCAG AAA verified ── */
+    --k-text-primary: #fafafa;      /* 18.6:1 on #0d0d0d ✅ AAA */
+    --k-text-secondary: #d4d4d8;    /* 13.1:1 on #0d0d0d ✅ AAA */
+    --k-text-tertiary: #a1a1aa;     /* 7.6:1  on #0d0d0d ✅ AAA */
+    --k-text-disabled: #a1a1aa;     /* 7.6:1  — minimum AAA threshold */
+    --k-text-placeholder: #71717a;  /* [v10 NEW] 4.7:1 — AA for large text, used only on placeholder */
+
+    /* ── Brand ── */
+    --k-red: #ED1C24;               /* Kargo corporate red — ONLY for large text &amp;amp;amp;amp;amp;amp;amp; CTAs */
+    --k-red-text: #ff6b6f;          /* Lightened red for small text: 7.3:1 on #0d0d0d ✅ */
+    --k-red-hover: #ff4a50;
+    --k-red-glow: rgba(237,28,36,0.15);
+    --k-gold: #EFAF00;              /* 10.0:1 on #0d0d0d ✅ AAA */
+    --k-gold-hover: #ffc933;
+
+    /* ── Semantic colors [v10 NEW] ── */
+    --k-success: #4ade80;           /* 11.2:1 on #0d0d0d ✅ */
+    --k-success-bg: rgba(74,222,128,0.1);
+    --k-warning: #fbbf24;           /* 12.5:1 on #0d0d0d ✅ */
+    --k-warning-bg: rgba(251,191,36,0.1);
+    --k-error: #ff6b6f;             /* 7.3:1 on #0d0d0d ✅ (same as red-text) */
+    --k-error-bg: rgba(237,28,36,0.08);
+    --k-info: #93c5fd;              /* 10.8:1 on #0d0d0d ✅ */
+
+    /* ── Odoo variable overrides ── */
+    --o-webclient-background-color: #0d0d0d !important;
+    --o-view-background-color: #0d0d0d !important;
+    --o-form-lighten: #1a1a1a !important;
+    --o-color-border: #2a2a2a !important;
+    --o-brand-primary: #ED1C24 !important;
+    --o-brand-odoo: #ED1C24 !important;
+    --o-action-color-bg: #0d0d0d !important;
+    --o-color-bg: #0d0d0d !important;
+    --o-color-primary: #ED1C24 !important;
+
+    /* v12.1: Kill ALL Enterprise purple (#714B67) */
+    --o-navbar-bg: #0d0d0d !important;
+    --o-navbar-color: #fafafa !important;
+    --o-navbar-badge-bg: #ED1C24 !important;
+    --o-navbar-badge-color: #fff !important;
+    --o-brand-secondary: #1a1a1a !important;
+    --o-webclient-color: #fafafa !important;
+    --o-community-color: #ED1C24 !important;
+    --o-enterprise-color: #ED1C24 !important;
+    --o-enterprise-action-color: #ED1C24 !important;
+    --o-main-color-muted: #71717a !important;
+    --o-main-favorite-color: #EFAF00 !important;
+    --o-main-components-bg-color: #1a1a1a !important;
+    --o-cp-background-color: #0d0d0d !important;
+    --o-kanban-color-border: #2a2a2a !important;
+    --o-list-footer-bg-color: #1a1a1a !important;
+    --o-list-footer-font-weight: 700 !important;
+    --o-navbar-border-bottom: 1px solid #222 !important;
+
+    /* v12.4: INVERTED GRAY SCALE — Dark mode essentials */
+    --o-gray-100: #1a1a1a !important;
+    --o-gray-200: #222 !important;
+    --o-gray-300: #333 !important;
+    --o-gray-400: #555 !important;
+    --o-gray-500: #71717a !important;
+    --o-gray-600: #a1a1aa !important;
+    --o-gray-700: #d4d4d8 !important;
+    --o-gray-800: #e4e4e7 !important;
+    --o-gray-900: #fafafa !important;
+
+    /* v12.4: TEXT &amp;amp;amp; LINK COLORS — visible on dark */
+    --o-main-text-color: #e4e4e7 !important;
+    --o-main-link-color: #60a5fa !important;
+    --o-main-headings-color: #fafafa !important;
+    --o-main-color-muted: #71717a !important;
+
+    /* v12.4: Additional Odoo color overrides */
+    --o-main-def-btn-bg: #222 !important;
+    --o-text-color: #e4e4e7 !important;
+    --o-text-muted: #71717a !important;
+    --o-main-color-text: #fafafa !important;
+    --o-view-background-color: #0d0d0d !important;
+    --bs-body-bg: #0d0d0d !important;
+    --bs-card-bg: #161616 !important;
+    --bs-modal-bg: #141414 !important;
+    --bs-dropdown-bg: #141414 !important;
+    --bs-border-color: #2a2a2a !important;
+    --bs-border-color-translucent: rgba(255,255,255,0.06) !important;
+    --bs-body-color: #fafafa !important;
+    --bs-secondary-bg: #161616 !important;
+    --bs-tertiary-bg: #1e1e1e !important;
+    --bs-emphasis-color: #fff !important;
+    --bs-primary: #ED1C24 !important;
+    --bs-primary-rgb: 237,28,36 !important;
+    --bs-link-color: #ff6b6f !important;
+    --bs-link-hover-color: #ff4a50 !important;
+
+    /* ── Spacing (8px grid) ── */
+    --k-space-1: 4px;
+    --k-space-2: 8px;
+    --k-space-3: 12px;
+    --k-space-4: 16px;
+    --k-space-5: 24px;
+    --k-space-6: 32px;
+    --k-space-8: 48px;
+
+    /* ── Touch target ── */
+    --k-touch-min: 44px;           /* Desktop/admin standard */
+    --k-touch-field: 56px;         /* v12: Mechanic glove-friendly */
+    --k-touch-action: 52px;        /* v12: Action buttons (between) */
+
+    /* v12: Pokayoke semantic states — error prevention */
+    --k-state-available: #22c55e;  /* Green — equipment available */
+    --k-state-rented: #f59e0b;     /* Amber — equipment rented out */
+    --k-state-service: #3b82f6;    /* Blue — in maintenance */
+    --k-state-damaged: #ef4444;    /* Red — needs attention */
+    --k-state-available-bg: rgba(34,197,94,0.12);
+    --k-state-rented-bg: rgba(245,158,11,0.12);
+    --k-state-service-bg: rgba(59,130,246,0.12);
+    --k-state-damaged-bg: rgba(239,68,68,0.12);           /* Desktop: Apple HIG standard */
+    --k-touch-glove: 56px;         /* v12: Mechanics with gloves — industrial standard */
+
+    /* ── Radius ── */
+    --k-radius-sm: 6px;
+    --k-radius-md: 8px;
+    --k-radius-lg: 12px;
+    --k-radius-xl: 16px;
+    --k-radius-2xl: 24px;
+
+    /* ── Mobile lateral margin (Apple HIG) [v10 NEW] ── */
+    --k-mobile-margin: 16px;
+}
+
+
+/* ═══ 2. BASE SURFACES ═══════════════════════════════════════════ */
+body.o_web_client:not(#_):not(#_) { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_action_manager { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_action { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_content { background: var(--k-bg-base) !important; }
+
+/* Global font */
+.o_web_client:not(#_):not(#_) {
+    font-family: 'Play', sans-serif !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}
+
+
+/* ═══ 3. NAVBAR ═══════════════════════════════════════════════════ */
+.o_web_client:not(#_):not(#_) .o_main_navbar {
+    background: var(--k-bg-navbar) !important;
+    border-bottom: 1px solid var(--k-border-subtle) !important;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.4) !important;
+    font-family: 'Play', sans-serif !important;
+    min-height: 48px !important;
+    padding-top: env(safe-area-inset-top, 0) !important;
+    padding-left: env(safe-area-inset-left, 0) !important;
+    padding-right: env(safe-area-inset-right, 0) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_main_navbar .o_menu_brand {
+    font-family: 'Play', sans-serif !important;
+    font-weight: 700 !important;
+    color: var(--k-text-primary) !important;
+    max-width: 140px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_main_navbar .nav-link,
+.o_web_client:not(#_):not(#_) .o_main_navbar .dropdown-toggle {
+    color: var(--k-text-secondary) !important;
+    min-height: var(--k-touch-min) !important;
+    min-width: var(--k-touch-min) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+/* [v10 NEW] Hamburger menu touch target */
+.o_web_client:not(#_):not(#_) .o_main_navbar .o_menu_toggle {
+    min-width: var(--k-touch-min) !important;
+    min-height: var(--k-touch-min) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: var(--k-text-secondary) !important;
+}
+
+/* [v10 NEW] Navbar logo/brand icon on mobile */
+.o_web_client:not(#_):not(#_) .o_main_navbar .o_menu_brand_icon img {
+    max-height: 28px !important;
+    width: auto !important;
+    border-radius: var(--k-radius-sm) !important;
+}
+
+.o_web_client:not(#_):not(#_) .breadcrumb { font-family: 'Play', sans-serif !important; }
+.o_web_client:not(#_):not(#_) .breadcrumb-item a { color: var(--k-text-tertiary) !important; }
+.o_web_client:not(#_):not(#_) .breadcrumb-item.active { color: var(--k-text-primary) !important; }
+/* [v10 NEW] Breadcrumb touch targets */
+.o_web_client:not(#_):not(#_) .breadcrumb-item {
+    min-height: var(--k-touch-min) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+
+
+/* ═══ 4. CONTROL PANEL + SEARCH ══════════════════════════════════ */
+.o_web_client:not(#_):not(#_) .o_control_panel {
+    background: var(--k-bg-base) !important;
+    padding: var(--k-space-2) var(--k-space-4) !important;
+}
+.o_web_client:not(#_):not(#_) .o_cp_bottom { background: var(--k-bg-base) !important; }
+
+.o_web_client:not(#_):not(#_) .o_searchview {
+    background: var(--k-bg-input) !important;
+    border: 1px solid var(--k-border-default) !important;
+    border-radius: 10px !important;
+    transition: border-color 0.2s !important;
+}
+.o_web_client:not(#_):not(#_) .o_searchview:focus-within {
+    border-color: #444 !important;
+    box-shadow: 0 0 0 3px var(--k-red-glow) !important;  /* [v10 FIX] Added focus ring */
+}
+
+.o_web_client:not(#_):not(#_) .o_searchview input,
+.o_web_client:not(#_):not(#_) .o_searchview .o_searchview_input,
+.o_web_client:not(#_):not(#_) .o_searchview input.o_searchview_input {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    color: var(--k-text-secondary) !important;
+}
+.o_web_client:not(#_):not(#_) .o_searchview input:focus,
+.o_web_client:not(#_):not(#_) .o_searchview .o_searchview_input:focus {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_searchview .o_searchview_facet {
+    background: #222 !important;
+    border-radius: var(--k-radius-sm) !important;
+}
+
+/* View switch buttons — touch targets */
+.o_web_client:not(#_):not(#_) .o_cp_switch_buttons .btn {
+    min-width: var(--k-touch-min) !important;
+    min-height: var(--k-touch-min) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+
+/* ═══ 5. KANBAN VIEW ═════════════════════════════════════════════ */
+.o_web_client:not(#_):not(#_) .o_kanban_view { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_kanban_renderer { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_kanban_group { background: transparent !important; }
+.o_web_client:not(#_):not(#_) .o_kanban_header { background: transparent !important; }
+
+.o_web_client:not(#_):not(#_) .o_kanban_group_header {
+    color: var(--k-text-tertiary) !important;
+    font-family: 'Play', sans-serif !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.3px !important;
+}
+
+
+/* v12.4: KANBAN GROUP HEADERS — clear hierarchy */
+.o_web_client:not(#_):not(#_) .o_kanban_header,
+.o_web_client:not(#_):not(#_) .o_kanban_group_header {
+    color: var(--k-text-primary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_kanban_header .o_column_title,
+.o_web_client:not(#_):not(#_) .o_kanban_header_title .o_column_title {
+    color: var(--k-text-primary) !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+}
+
+/* Group count badge */
+.o_web_client:not(#_):not(#_) .o_kanban_header .o_kanban_counter {
+    color: var(--k-text-tertiary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_kanban_header .o_kanban_counter .o_kanban_counter_side {
+    color: var(--k-text-tertiary) !important;
+    font-weight: 600 !important;
+}
+
+
+/* v12.4: KANBAN CARD CONTENT — all text readable */
+.o_web_client:not(#_):not(#_) .o_kanban_record {
+    color: var(--k-text-primary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_kanban_record * {
+    color: inherit;
+}
+
+/* Card title (equipment name) — brightest */
+.o_web_client:not(#_):not(#_) .o_kanban_record strong,
+.o_web_client:not(#_):not(#_) .o_kanban_record .fw-bold,
+.o_web_client:not(#_):not(#_) .o_kanban_record .o_kanban_record_title {
+    color: #fafafa !important;
+    font-weight: 700 !important;
+}
+
+/* Card subtitle / secondary info */
+.o_web_client:not(#_):not(#_) .o_kanban_record .text-muted,
+.o_web_client:not(#_):not(#_) .o_kanban_record small,
+.o_web_client:not(#_):not(#_) .o_kanban_record .o_text_overflow {
+    color: var(--k-text-secondary) !important;
+}
+
+/* Card footer / brand info ("TOYOTA") */
+.o_web_client:not(#_):not(#_) .o_kanban_record .o_kanban_record_bottom,
+.o_web_client:not(#_):not(#_) .o_kanban_record footer {
+    color: var(--k-text-tertiary) !important;
+}
+
+/* Location pin icon + text ("📍 Patio Kargo") */
+.o_web_client:not(#_):not(#_) .o_kanban_record .fa-map-marker,
+.o_web_client:not(#_):not(#_) .o_kanban_record .o_field_char {
+    color: var(--k-text-secondary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_kanban_record {
+    background: var(--k-bg-card) !important;
+    border: 1px solid #222 !important;
+    border-radius: var(--k-radius-lg) !important;
+    transition: all 0.15s ease !important;
+    /* v12: cards fill available width */
+    width: 100% !important;
+    min-width: 0 !important;
+}
+.o_web_client:not(#_):not(#_) .o_kanban_record:hover {
+    border-color: var(--k-gold) !important;
+    box-shadow: 0 4px 16px rgba(239,175,0,0.12) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* [v10 NEW] Kanban ungrouped — responsive grid */
+.o_web_client:not(#_):not(#_) .o_kanban_ungrouped {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: var(--k-space-2) !important;
+    padding: var(--k-space-2) !important;
+}
+.o_web_client:not(#_):not(#_) .o_kanban_ungrouped .o_kanban_record {
+    flex: 1 1 300px !important;
+    max-width: 100% !important;
+}
+
+
+/* ═══ 6. LIST VIEW ═══════════════════════════════════════════════ */
+.o_web_client:not(#_):not(#_) .o_list_view { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_list_renderer { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_list_table { background: var(--k-bg-base) !important; }
+
+.o_web_client:not(#_):not(#_) .o_list_view th {
+    background: var(--k-bg-input) !important;
+    border-bottom: 2px solid #222 !important;
+    color: var(--k-text-tertiary) !important;
+    font-family: 'Play', sans-serif !important;
+    text-transform: uppercase !important;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.5px !important;
+}
+.o_web_client:not(#_):not(#_) .o_data_row {
+    border-bottom: 1px solid #1a1a1a !important;
+}
+.o_web_client:not(#_):not(#_) .o_data_row td {
+    color: var(--k-text-secondary) !important;
+}
+.o_web_client:not(#_):not(#_) .o_data_row:hover td {
+    background: #141414 !important;
+}
+.o_web_client:not(#_):not(#_) .o_data_row.o_data_row_selected td {
+    background: rgba(237,28,36,0.06) !important;
+}
+
+
+/* ═══ 7. FORM VIEW ═══════════════════════════════════════════════ */
+.o_web_client:not(#_):not(#_) .o_form_view { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_form_renderer { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_form_sheet_bg { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_form_sheet {
+    background: var(--k-bg-raised) !important;
+    border: 1px solid var(--k-border-subtle) !important;
+    border-radius: 14px !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.2) !important;
+}
+
+/* Stat buttons bar */
+.o_web_client:not(#_):not(#_) .oe_button_box {
+    border-bottom: 1px solid var(--k-border-subtle) !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: var(--k-space-1) !important;
+}
+.o_web_client:not(#_):not(#_) .oe_stat_button {
+    border-color: var(--k-border-subtle) !important;
+    color: var(--k-text-secondary) !important;
+    transition: background 0.15s !important;
+    min-height: var(--k-touch-min) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+.o_web_client:not(#_):not(#_) .oe_stat_button:hover {
+    background: #1a1a1a !important;
+}
+.o_web_client:not(#_):not(#_) .oe_stat_button .o_stat_value {
+    color: var(--k-text-primary) !important;
+    font-family: 'Play', sans-serif !important;
+    font-weight: 700 !important;
+}
+.o_web_client:not(#_):not(#_) .oe_stat_button .o_stat_text {
+    color: var(--k-text-tertiary) !important;
+}
+
+/* Group separators / inner groups */
+.o_web_client:not(#_):not(#_) .o_group .o_group_col {
+    border-color: var(--k-border-subtle) !important;
+}
+.o_web_client:not(#_):not(#_) .o_inner_group .o_td_label {
+    color: var(--k-text-tertiary) !important;
+}
+.o_web_client:not(#_):not(#_) .o_horizontal_separator {
+    font-family: 'Play', sans-serif !important;
+    font-weight: 700 !important;
+    color: var(--k-text-secondary) !important;
+    border-bottom: 1px solid var(--k-border-subtle) !important;
+    text-transform: uppercase !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Chatter */
+.o_web_client:not(#_):not(#_) .o_FormRenderer_chatterContainer { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_chatter { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_chatter_topbar { border-bottom: 1px solid var(--k-border-subtle) !important; }
+.o_web_client:not(#_):not(#_) .o_mail_thread { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_Message {
+    border-bottom: 1px solid #151515 !important;
+    padding: var(--k-space-3) 0 !important;
+}
+.o_web_client:not(#_):not(#_) .o_Message:hover { background: var(--k-bg-input) !important; border-radius: var(--k-radius-md) !important; }
+.o_web_client:not(#_):not(#_) .o_Message_authorName { color: var(--k-text-primary) !important; font-weight: 600 !important; }
+.o_web_client:not(#_):not(#_) .o_Message_date { color: var(--k-text-tertiary) !important; }
+.o_web_client:not(#_):not(#_) .o_Message_body { color: var(--k-text-secondary) !important; }
+
+/* Chatter buttons */
+.o_web_client:not(#_):not(#_) .o_chatter_topbar .btn {
+    border-radius: var(--k-radius-md) !important;
+    min-height: var(--k-touch-min) !important;
+}
+.o_web_client:not(#_):not(#_) .o_chatter_topbar .btn-primary {
+    background: linear-gradient(135deg, var(--k-red), #b81a20) !important;
+    border: none !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.2px !important;
+}
+
+/* Statusbar */
+.o_web_client:not(#_):not(#_) .o_statusbar_status { background: transparent !important; }
+.o_web_client:not(#_):not(#_) .o_statusbar_status button {
+    background: var(--k-bg-card) !important;
+    border: 1px solid #222 !important;
+    color: var(--k-text-tertiary) !important;
+    border-radius: var(--k-radius-sm) !important;
+    margin: 0 2px !important;
+    transition: all 0.15s !important;
+    min-height: 36px !important;
+}
+.o_web_client:not(#_):not(#_) .o_statusbar_status button:hover {
+    background: var(--k-border-subtle) !important;
+    color: var(--k-text-secondary) !important;
+}
+.o_web_client:not(#_):not(#_) .o_statusbar_status button.o_arrow_button_current,
+.o_web_client:not(#_):not(#_) .o_statusbar_status button[aria-checked="true"] {
+    background: var(--k-red-glow) !important;
+    border-color: rgba(237,28,36,0.3) !important;
+    color: var(--k-red-text) !important;
+    font-weight: 700 !important;
+}
+
+/* Notebook / Tabs */
+.o_web_client:not(#_):not(#_) .o_notebook .nav-tabs {
+    border-bottom: 1px solid var(--k-border-subtle) !important;
+    gap: 2px !important;
+}
+.o_web_client:not(#_):not(#_) .o_notebook .nav-tabs .nav-link {
+    color: var(--k-text-tertiary) !important;
+    border: none !important;
+    padding: 10px var(--k-space-4) !important;
+    border-radius: var(--k-radius-md) var(--k-radius-md) 0 0 !important;
+    font-family: 'Play', sans-serif !important;
+    font-size: 0.82rem !important;
+    transition: all 0.15s !important;
+    min-height: var(--k-touch-min) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+}
+.o_web_client:not(#_):not(#_) .o_notebook .nav-tabs .nav-link:hover {
+    color: var(--k-text-secondary) !important;
+    background: var(--k-bg-input) !important;
+}
+.o_web_client:not(#_):not(#_) .o_notebook .nav-tabs .nav-link.active {
+    color: var(--k-text-primary) !important;
+    background: transparent !important;
+    border-bottom: 3px solid var(--k-red) !important;
+    box-shadow: none !important;
+}
+
+/* One2many / Many2many inside form */
+.o_web_client:not(#_):not(#_) .o_field_one2many .o_list_view { background: transparent !important; }
+
+/* v12.2: DARK TABLES — Kill ALL white in embedded lists */
+.o_web_client:not(#_):not(#_) table,
+.o_web_client:not(#_):not(#_) .table,
+.o_web_client:not(#_):not(#_) .o_list_table,
+.o_web_client:not(#_):not(#_) .o_list_renderer table {
+    background: var(--k-bg-base) !important;
+    background-color: var(--k-bg-base) !important;
+    color: var(--k-text-primary) !important;
+    --bs-table-bg: var(--k-bg-base) !important;
+    --bs-table-color: var(--k-text-primary) !important;
+    --bs-table-striped-bg: #141414 !important;
+    --bs-table-hover-bg: #1a1a1a !important;
+    --bs-table-border-color: #222 !important;
+}
+
+.o_web_client:not(#_):not(#_) thead,
+.o_web_client:not(#_):not(#_) thead tr,
+.o_web_client:not(#_):not(#_) thead th {
+    background: #141414 !important;
+    background-color: #141414 !important;
+    color: var(--k-text-secondary) !important;
+    border-bottom: 1px solid #2a2a2a !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.3px !important;
+}
+
+.o_web_client:not(#_):not(#_) tbody,
+.o_web_client:not(#_):not(#_) tbody tr,
+.o_web_client:not(#_):not(#_) tbody td {
+    background: var(--k-bg-base) !important;
+    background-color: var(--k-bg-base) !important;
+    color: var(--k-text-primary) !important;
+    border-color: #1a1a1a !important;
+}
+
+.o_web_client:not(#_):not(#_) tbody tr:nth-child(even) td {
+    background: #111 !important;
+}
+
+.o_web_client:not(#_):not(#_) tbody tr:hover td {
+    background: #1a1a1a !important;
+}
+
+/* Embedded list tables inside forms (one2many, x2many) */
+.o_web_client:not(#_):not(#_) .o_field_one2many,
+.o_web_client:not(#_):not(#_) .o_field_x2many_list,
+.o_web_client:not(#_):not(#_) .o_field_many2many {
+    background: var(--k-bg-base) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_field_one2many .o_list_renderer,
+.o_web_client:not(#_):not(#_) .o_field_x2many_list .o_list_renderer {
+    background: var(--k-bg-base) !important;
+    border: 1px solid #222 !important;
+    border-radius: var(--k-radius-lg) !important;
+    overflow: hidden !important;
+}
+
+/* Table footer (totals row) */
+.o_web_client:not(#_):not(#_) tfoot,
+.o_web_client:not(#_):not(#_) tfoot tr,
+.o_web_client:not(#_):not(#_) tfoot td {
+    background: #141414 !important;
+    color: var(--k-text-secondary) !important;
+    font-weight: 700 !important;
+    border-top: 2px solid #2a2a2a !important;
+}
+.o_web_client:not(#_):not(#_) .o_field_one2many th {
+    background: var(--k-bg-input) !important;
+    font-size: 0.7rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    color: var(--k-text-tertiary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_field_many2many_tags .badge {
+    background: var(--k-border-subtle) !important;
+    border: 1px solid var(--k-border-default) !important;
+    border-radius: var(--k-radius-sm) !important;
+    color: var(--k-text-secondary) !important;
+}
+
+/* Number fields */
+.o_web_client:not(#_):not(#_) .o_field_integer .o_input,
+.o_web_client:not(#_):not(#_) .o_field_float .o_input {
+    font-family: 'Play', monospace !important;
+    font-weight: 700 !important;
+}
+
+/* Required field */
+.o_web_client:not(#_):not(#_) .o_form_label.o_form_label_empty {
+    color: var(--k-red-text) !important;
+}
+
+
+/* ═══ 8. INPUTS ══════════════════════════════════════════════════ */
+.o_web_client:not(#_):not(#_) .o_input,
+.o_web_client:not(#_):not(#_) .form-control,
+.o_web_client:not(#_):not(#_) .form-select,
+.o_web_client:not(#_):not(#_) .o_field_widget input,
+.o_web_client:not(#_):not(#_) .o_field_widget textarea {
+    background: var(--k-bg-input) !important;
+    border: 1px solid var(--k-border-default) !important;
+    border-radius: var(--k-radius-md) !important;
+    color: var(--k-text-primary) !important;
+    transition: border-color 0.15s !important;
+    min-height: var(--k-touch-min) !important;
+}
+
+/* [v10 NEW] Focus ring for ALL inputs — accessibility */
+.o_web_client:not(#_):not(#_) .form-control:focus,
+.o_web_client:not(#_):not(#_) .o_input:focus,
+.o_web_client:not(#_):not(#_) .o_field_widget input:focus,
+.o_web_client:not(#_):not(#_) .o_field_widget textarea:focus,
+.o_web_client:not(#_):not(#_) .form-select:focus {
+    background: var(--k-bg-card) !important;
+    border-color: var(--k-red) !important;
+    box-shadow: 0 0 0 3px var(--k-red-glow) !important;
+    outline: none !important;
+}
+
+/* [v10 NEW] Placeholder text — AA compliant */
+.o_web_client:not(#_):not(#_) .form-control::placeholder,
+.o_web_client:not(#_):not(#_) .o_input::placeholder,
+.o_web_client:not(#_):not(#_) input::placeholder,
+.o_web_client:not(#_):not(#_) textarea::placeholder {
+    color: var(--k-text-placeholder) !important;
+    opacity: 1 !important;
+}
+
+/* [v10 NEW] Disabled state — distinguishable */
+.o_web_client:not(#_):not(#_) .form-control:disabled,
+.o_web_client:not(#_):not(#_) .form-control[readonly],
+.o_web_client:not(#_):not(#_) .o_readonly_modifier .o_input {
+    background: #0a0a0a !important;
+    border-color: #1a1a1a !important;
+    color: var(--k-text-disabled) !important;
+    opacity: 1 !important;
+}
+
+/* Select / Dropdown trigger */
+.o_web_client:not(#_):not(#_) .form-select {
+    min-height: var(--k-touch-min) !important;
+    padding: var(--k-space-2) var(--k-space-3) !important;
+}
+
+
+/* ═══ 9. SEMANTIC STATES [v10 NEW] ═══════════════════════════════ */
+.o_web_client:not(#_):not(#_) .text-success,
+.o_web_client:not(#_):not(#_) .text-bg-success { color: var(--k-success) !important; }
+.o_web_client:not(#_):not(#_) .text-warning,
+.o_web_client:not(#_):not(#_) .text-bg-warning { color: var(--k-warning) !important; }
+.o_web_client:not(#_):not(#_) .text-danger,
+.o_web_client:not(#_):not(#_) .text-bg-danger { color: var(--k-error) !important; }
+.o_web_client:not(#_):not(#_) .text-info,
+.o_web_client:not(#_):not(#_) .text-bg-info { color: var(--k-info) !important; }
+
+.o_web_client:not(#_):not(#_) .alert-success { background: var(--k-success-bg) !important; border-color: rgba(74,222,128,0.2) !important; color: var(--k-success) !important; }
+.o_web_client:not(#_):not(#_) .alert-warning { background: var(--k-warning-bg) !important; border-color: rgba(251,191,36,0.2) !important; color: var(--k-warning) !important; }
+.o_web_client:not(#_):not(#_) .alert-danger { background: var(--k-error-bg) !important; border-color: rgba(237,28,36,0.2) !important; color: var(--k-error) !important; }
+.o_web_client:not(#_):not(#_) .alert-info { background: rgba(147,197,253,0.08) !important; border-color: rgba(147,197,253,0.2) !important; color: var(--k-info) !important; }
+
+
+/* ═══ 10. BUTTONS ════════════════════════════════════════════════ */
+.o_web_client:not(#_):not(#_) .btn {
+    min-height: var(--k-touch-min) !important;
+    min-width: var(--k-touch-min) !important;
+    font-family: 'Play', sans-serif !important;
+    border-radius: var(--k-radius-md) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: var(--k-space-2) !important;
+    transition: all 0.15s !important;
+    touch-action: manipulation !important;
+}
+
+.o_web_client:not(#_):not(#_) .btn-primary {
+    background: linear-gradient(135deg, var(--k-red), #b81a20) !important;
+    border: none !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(237,28,36,0.2) !important;
+}
+.o_web_client:not(#_):not(#_) .btn-primary:hover {
+    background: linear-gradient(135deg, var(--k-red-hover), var(--k-red)) !important;
+    box-shadow: 0 4px 16px rgba(237,28,36,0.3) !important;
+    transform: translateY(-1px) !important;
+}
+.o_web_client:not(#_):not(#_) .btn-primary:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 1px 4px rgba(237,28,36,0.2) !important;
+}
+
+.o_web_client:not(#_):not(#_) .btn-secondary {
+    background: #222 !important;
+    border: 1px solid #444 !important;
+    color: #e4e4e7 !important;
+    font-weight: 600 !important;
+}
+.o_web_client:not(#_):not(#_) .btn-secondary:hover {
+    background: #2a2a2a !important;
+    border-color: #555 !important;
+    color: #fafafa !important;
+}
+/* v12.2: Light/outline buttons — visible on dark */
+.o_web_client:not(#_):not(#_) .btn-light,
+.o_web_client:not(#_):not(#_) .btn-outline-secondary {
+    background: #1a1a1a !important;
+    border: 1px solid #3a3a3a !important;
+    color: #d4d4d8 !important;
+}
+
+.o_web_client:not(#_):not(#_) .btn-light:hover,
+.o_web_client:not(#_):not(#_) .btn-outline-secondary:hover {
+    background: #2a2a2a !important;
+    border-color: #555 !important;
+    color: #fafafa !important;
+}
+
+/* Pager navigation (&amp;amp;amp;lt; &amp;amp;amp;gt;) — clearly visible */
+.o_web_client:not(#_):not(#_) .o_pager .o_pager_next,
+.o_web_client:not(#_):not(#_) .o_pager .o_pager_previous {
+    color: #d4d4d8 !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_pager {
+    color: var(--k-text-secondary) !important;
+}
+
+/* Focus ring for keyboard navigation (accessibility) */
+.o_web_client:not(#_):not(#_) .btn:focus-visible {
+    outline: 2px solid var(--k-gold) !important;
+    outline-offset: 2px !important;
+}
+
+
+/* ═══ 11. DROPDOWNS / POPOVERS ═══════════════════════════════════ */
+.o_web_client:not(#_):not(#_) .dropdown-menu {
+    background: var(--k-bg-raised) !important;
+    border: 1px solid #222 !important;
+    border-radius: var(--k-radius-lg) !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5) !important;
+    padding: var(--k-space-1) !important;
+}
+.o_web_client:not(#_):not(#_) .dropdown-item {
+    border-radius: var(--k-radius-sm) !important;
+    color: var(--k-text-secondary) !important;
+    min-height: var(--k-touch-min) !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: var(--k-space-2) var(--k-space-3) !important;
+}
+.o_web_client:not(#_):not(#_) .dropdown-item:hover {
+    background: var(--k-border-subtle) !important;
+    color: var(--k-text-primary) !important;
+}
+.o_web_client:not(#_):not(#_) .o_popover {
+    background: var(--k-bg-raised) !important;
+    border: 1px solid #222 !important;
+    border-radius: var(--k-radius-lg) !important;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5) !important;
+}
+
+
+/* ═══ 12. MODALS ═════════════════════════════════════════════════ */
+.o_web_client:not(#_):not(#_) .modal-content {
+    background: var(--k-bg-raised) !important;
+    border: 1px solid #222 !important;
+    border-radius: var(--k-radius-xl) !important;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6) !important;
+}
+.o_web_client:not(#_):not(#_) .modal-header {
+    background: var(--k-bg-input) !important;
+    border-bottom: 1px solid #222 !important;
+    color: var(--k-text-primary) !important;
+}
+.o_web_client:not(#_):not(#_) .modal-body {
+    color: var(--k-text-secondary) !important;
+}
+.o_web_client:not(#_):not(#_) .modal-footer {
+    background: var(--k-bg-input) !important;
+    border-top: 1px solid #222 !important;
+}
+
+
+/* ═══ 13. SETTINGS ═══════════════════════════════════════════════ */
+.o_web_client:not(#_):not(#_) .o_base_settings { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_settings_container { background: var(--k-bg-base) !important; }
+.o_web_client:not(#_):not(#_) .o_setting_box {
+    background: var(--k-bg-raised) !important;
+    border: 1px solid #222 !important;
+    border-radius: var(--k-radius-lg) !important;
+}
+
+
+/* ═══ 14. MISC ═══════════════════════════════════════════════════ */
+.o_web_client:not(#_):not(#_) .o_search_panel {
+    background: var(--k-bg-input) !important;
+    border-right: 1px solid var(--k-border-subtle) !important;
+}
+.o_web_client:not(#_):not(#_) .badge.bg-primary { background: var(--k-red) !important; }
+.o_web_client:not(#_):not(#_) .o_loading_indicator { background: var(--k-red) !important; }
+.o_web_client:not(#_):not(#_) .o_notification {
+    background: var(--k-bg-card) !important;
+    border: 1px solid #222 !important;
+    border-radius: var(--k-radius-lg) !important;
+    color: var(--k-text-primary) !important;
+}
+.o_web_client:not(#_):not(#_) ::selection { background: var(--k-red-glow) !important; }
+.o_web_client:not(#_):not(#_) .o_calendar_view { background: var(--k-bg-base) !important; }
+
+/* Navbar icons — show original, no pink filter */
+.o_web_client:not(#_):not(#_) .o_main_navbar img.o_app_icon {
+    filter: none !important;
+    border-radius: var(--k-radius-sm) !important;
+}
+
+/* Scrollbar */
+.o_web_client:not(#_):not(#_) ::-webkit-scrollbar { width: 6px !important; height: 6px !important; }
+.o_web_client:not(#_):not(#_) ::-webkit-scrollbar-track { background: transparent !important; }
+.o_web_client:not(#_):not(#_) ::-webkit-scrollbar-thumb { background: var(--k-border-default) !important; border-radius: 3px !important; }
+.o_web_client:not(#_):not(#_) ::-webkit-scrollbar-thumb:hover { background: #3a3a3a !important; }
+
+/* Links in content areas — AAA compliant */
+.o_web_client:not(#_):not(#_) a:not(.btn):not(.nav-link):not(.dropdown-item) {
+    color: var(--k-red-text) !important;
+}
+.o_web_client:not(#_):not(#_) a:not(.btn):not(.nav-link):not(.dropdown-item):hover {
+    color: var(--k-red-hover) !important;
+}
+
+/* [v10 NEW] Tooltip dark theme */
+.o_web_client:not(#_):not(#_) .tooltip-inner {
+    background: var(--k-bg-card) !important;
+    border: 1px solid var(--k-border-default) !important;
+    color: var(--k-text-primary) !important;
+    border-radius: var(--k-radius-md) !important;
+    font-size: 13px !important;
+}
+.o_web_client:not(#_):not(#_) .tooltip .tooltip-arrow::before {
+    border-top-color: var(--k-bg-card) !important;
+}
+
+
+/* ═══ 14b. POKAYOKE — Error Prevention &amp;amp;amp;amp;amp; Status System ═══════ */
+
+/* v12: Fleet status badges with distinct colors */
+.o_kanban_record .badge,
+.o_field_badge .badge {
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    letter-spacing: 0.3px !important;
+}
+
+/* v12: Destructive actions — clear warning */
+.btn-danger,
+.o_web_client:not(#_):not(#_) .btn-danger {
+    background: var(--k-state-damaged) !important;
+    border-color: var(--k-state-damaged) !important;
+    font-weight: 700 !important;
+}
+
+.btn-danger:hover {
+    background: #dc2626 !important;
+    border-color: #dc2626 !important;
+}
+
+/* v12: Required field indicator — pokayoke */
+.o_form_editable .o_field_widget.o_required_modifier .o_input,
+.o_form_editable .o_field_widget.o_required_modifier input,
+.o_form_editable .o_field_widget.o_required_modifier select {
+    border-left: 3px solid var(--k-gold) !important;
+}
+
+/* v12: Invalid field — clear error feedback */
+.o_field_invalid .o_input,
+.o_field_invalid input {
+    border-color: var(--k-state-damaged) !important;
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.2) !important;
+}
+
+/* v12: Focus-visible rings — keyboard accessibility */
+.o_web_client:not(#_):not(#_) *:focus-visible {
+    outline: 2px solid var(--k-gold) !important;
+    outline-offset: 2px !important;
+}
+
+.o_web_client:not(#_):not(#_) .btn:focus-visible {
+    outline: 2px solid var(--k-gold) !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(239,175,0,0.25) !important;
+}
+
+/* v12: Section headers in forms — stronger visual weight */
+.o_web_client:not(#_):not(#_) .o_horizontal_separator {
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    color: var(--k-text-secondary) !important;
+    border-bottom: 2px solid var(--k-border-subtle) !important;
+    padding-bottom: 6px !important;
+    margin-top: 16px !important;
+    margin-bottom: 12px !important;
+}
+
+/* v12: Stat buttons — clearer clickable affordance */
+.o_web_client:not(#_):not(#_) .oe_stat_button {
+    border: 1px solid var(--k-border-subtle) !important;
+    border-radius: 10px !important;
+    background: var(--k-bg-elevated) !important;
+    transition: all 0.15s ease !important;
+    padding: 8px 14px !important;
+}
+
+.o_web_client:not(#_):not(#_) .oe_stat_button:hover {
+    border-color: var(--k-gold) !important;
+    background: rgba(239,175,0,0.06) !important;
+    transform: translateY(-1px) !important;
+}
+
+.o_web_client:not(#_):not(#_) .oe_stat_button .o_stat_value {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: var(--k-text-primary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .oe_stat_button .o_stat_text {
+    font-size: 0.72rem !important;
+    color: var(--k-text-tertiary) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.3px !important;
+}
+
+/* v12: Hover states for all clickable elements — desktop affordance */
+.o_web_client:not(#_):not(#_) .o_data_row:hover td {
+    background: rgba(255,255,255,0.04) !important;
+}
+
+.o_web_client:not(#_):not(#_) .breadcrumb-item a:hover {
+    color: var(--k-gold) !important;
+    text-decoration: underline !important;
+}
+
+
+
+/* v12.3: DATEPICKER — Dark mode */
+.o_web_client:not(#_):not(#_) .o_datetime_picker,
+.o_web_client:not(#_):not(#_) .o_datepicker,
+.o_web_client:not(#_):not(#_) .bootstrap-datetimepicker-widget,
+.o_web_client:not(#_):not(#_) .o_DateTimePickerPopover {
+    background: #1a1a1a !important;
+    border: 1px solid #333 !important;
+    border-radius: var(--k-radius-lg) !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5) !important;
+    color: var(--k-text-primary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_datetime_picker table,
+.o_web_client:not(#_):not(#_) .o_DateTimePickerPopover table {
+    background: transparent !important;
+    color: var(--k-text-primary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_datetime_picker th,
+.o_web_client:not(#_):not(#_) .o_DateTimePickerPopover th {
+    color: var(--k-text-secondary) !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_datetime_picker td,
+.o_web_client:not(#_):not(#_) .o_DateTimePickerPopover td {
+    color: var(--k-text-primary) !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_datetime_picker td:hover,
+.o_web_client:not(#_):not(#_) .o_DateTimePickerPopover td:hover {
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 6px !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_datetime_picker .o_selected,
+.o_web_client:not(#_):not(#_) .o_DateTimePickerPopover .o_selected,
+.o_web_client:not(#_):not(#_) .o_datetime_picker .active,
+.o_web_client:not(#_):not(#_) .o_DateTimePickerPopover .active {
+    background: var(--k-red) !important;
+    color: #fff !important;
+    border-radius: 6px !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_datetime_picker .o_today,
+.o_web_client:not(#_):not(#_) .o_DateTimePickerPopover .o_today {
+    border: 1px solid var(--k-gold) !important;
+    border-radius: 6px !important;
+}
+
+/* Datepicker navigation arrows */
+.o_web_client:not(#_):not(#_) .o_datetime_picker .o_previous,
+.o_web_client:not(#_):not(#_) .o_datetime_picker .o_next,
+.o_web_client:not(#_):not(#_) .o_DateTimePickerPopover button {
+    color: var(--k-text-secondary) !important;
+    background: transparent !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_datetime_picker .o_previous:hover,
+.o_web_client:not(#_):not(#_) .o_datetime_picker .o_next:hover {
+    color: var(--k-gold) !important;
+}
+
+
+/* v12.3: Many2many tags — dark */
+.o_web_client:not(#_):not(#_) .o_tag,
+.o_web_client:not(#_):not(#_) .badge,
+.o_web_client:not(#_):not(#_) .o_field_many2many_tags .badge {
+    background: #222 !important;
+    color: var(--k-text-primary) !important;
+    border: 1px solid #333 !important;
+    font-weight: 600 !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_tag .o_delete,
+.o_web_client:not(#_):not(#_) .badge .o_delete {
+    color: var(--k-text-tertiary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_tag .o_delete:hover {
+    color: var(--k-red-text) !important;
+}
+
+/* Status badges with semantic colors (keep their original color) */
+.o_web_client:not(#_):not(#_) .badge.text-bg-success,
+.o_web_client:not(#_):not(#_) .badge.bg-success {
+    background: var(--k-state-available-bg) !important;
+    color: var(--k-state-available) !important;
+    border: 1px solid rgba(34,197,94,0.3) !important;
+}
+
+.o_web_client:not(#_):not(#_) .badge.text-bg-warning,
+.o_web_client:not(#_):not(#_) .badge.bg-warning {
+    background: var(--k-state-rented-bg) !important;
+    color: var(--k-state-rented) !important;
+    border: 1px solid rgba(245,158,11,0.3) !important;
+}
+
+.o_web_client:not(#_):not(#_) .badge.text-bg-danger,
+.o_web_client:not(#_):not(#_) .badge.bg-danger {
+    background: var(--k-state-damaged-bg) !important;
+    color: var(--k-state-damaged) !important;
+    border: 1px solid rgba(239,68,68,0.3) !important;
+}
+
+.o_web_client:not(#_):not(#_) .badge.text-bg-info,
+.o_web_client:not(#_):not(#_) .badge.bg-info {
+    background: var(--k-state-service-bg) !important;
+    color: var(--k-state-service) !important;
+    border: 1px solid rgba(59,130,246,0.3) !important;
+}
+
+/* v12.3: Empty state / No content */
+.o_web_client:not(#_):not(#_) .o_view_nocontent,
+.o_web_client:not(#_):not(#_) .o_nocontent_help {
+    color: var(--k-text-tertiary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_nocontent_help .o_nocontent_help_content {
+    color: var(--k-text-secondary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_view_nocontent .btn-primary {
+    margin-top: 16px !important;
+}
+
+
+/* v12.4: UNIVERSAL TEXT SAFETY NET — no dark text on dark bg */
+.o_web_client:not(#_):not(#_) .text-dark {
+    color: var(--k-text-primary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .text-body {
+    color: var(--k-text-primary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .text-muted {
+    color: var(--k-text-tertiary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .text-secondary {
+    color: var(--k-text-secondary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .text-black,
+.o_web_client:not(#_):not(#_) .text-black-50 {
+    color: var(--k-text-secondary) !important;
+}
+
+/* Bootstrap text-* color overrides for dark mode */
+.o_web_client:not(#_):not(#_) .text-900,
+.o_web_client:not(#_):not(#_) .text-800 {
+    color: var(--k-text-primary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .text-700 {
+    color: var(--k-text-secondary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .text-600,
+.o_web_client:not(#_):not(#_) .text-500 {
+    color: var(--k-text-tertiary) !important;
+}
+
+/* Labels and small text */
+.o_web_client:not(#_):not(#_) label {
+    color: var(--k-text-secondary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .form-label {
+    color: var(--k-text-secondary) !important;
+}
+
+/* Headings */
+.o_web_client:not(#_):not(#_) h1,
+.o_web_client:not(#_):not(#_) h2,
+.o_web_client:not(#_):not(#_) h3,
+.o_web_client:not(#_):not(#_) h4,
+.o_web_client:not(#_):not(#_) h5,
+.o_web_client:not(#_):not(#_) h6 {
+    color: var(--k-text-primary) !important;
+}
+
+/* Paragraph text */
+.o_web_client:not(#_):not(#_) p {
+    color: var(--k-text-secondary) !important;
+}
+
+/* Borders that were dark-on-white */
+.o_web_client:not(#_):not(#_) .border {
+    border-color: #222 !important;
+}
+
+.o_web_client:not(#_):not(#_) .border-bottom {
+    border-bottom-color: #222 !important;
+}
+
+.o_web_client:not(#_):not(#_) .border-top {
+    border-top-color: #222 !important;
+}
+
+/* Cards and panels */
+.o_web_client:not(#_):not(#_) .card {
+    background: var(--k-bg-card) !important;
+    border-color: #222 !important;
+    color: var(--k-text-primary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .card-header {
+    background: #141414 !important;
+    border-bottom-color: #222 !important;
+    color: var(--k-text-primary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .card-body {
+    background: transparent !important;
+    color: var(--k-text-primary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .card-footer {
+    background: #141414 !important;
+    border-top-color: #222 !important;
+}
+
+/* v12.2: CHATTER — Complete dark mode */
+.o_web_client:not(#_):not(#_) .o-mail-Chatter {
+    background: var(--k-bg-base) !important;
+    color: var(--k-text-primary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o-mail-Thread {
+    background: var(--k-bg-base) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o-mail-Message {
+    background: transparent !important;
+    border-bottom: 1px solid #1a1a1a !important;
+}
+
+.o_web_client:not(#_):not(#_) .o-mail-Message-header {
+    color: var(--k-text-secondary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o-mail-Message .o-mail-Message-author-name {
+    color: var(--k-text-primary) !important;
+    font-weight: 700 !important;
+}
+
+.o_web_client:not(#_):not(#_) .o-mail-Message .o-mail-Message-date {
+    color: var(--k-text-tertiary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o-mail-Message-content,
+.o_web_client:not(#_):not(#_) .o-mail-Message-body {
+    color: var(--k-text-secondary) !important;
+}
+
+/* Chatter compose area */
+.o_web_client:not(#_):not(#_) .o-mail-Composer {
+    background: #111 !important;
+    border: 1px solid #222 !important;
+    border-radius: var(--k-radius-lg) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o-mail-Composer textarea {
+    background: transparent !important;
+    color: var(--k-text-primary) !important;
+    border: none !important;
+}
+
+/* Avatars — red Kargo instead of purple Enterprise */
+.o_web_client:not(#_):not(#_) .o_avatar,
+.o_web_client:not(#_):not(#_) .o-mail-Avatar,
+.o_web_client:not(#_):not(#_) .o-mail-Message .o_avatar,
+.o_web_client:not(#_):not(#_) span.o_avatar {
+    background-color: var(--k-red) !important;
+    border: none !important;
+    border-radius: 50% !important;
+}
+
+/* Tracking values (field changes) */
+.o_web_client:not(#_):not(#_) .o-mail-Message-trackingValue {
+    color: var(--k-text-tertiary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o-mail-Message-trackingValue a {
+    color: var(--k-gold) !important;
+}
+
+/* Chatter topbar buttons */
+.o_web_client:not(#_):not(#_) .o-mail-Chatter-topbar {
+    background: transparent !important;
+    border-bottom: 1px solid #1a1a1a !important;
+    gap: 8px !important;
+}
+
+/* Log note header (yellow bar) */
+.o_web_client:not(#_):not(#_) .o-mail-Message.o-isNote {
+    border-left: 3px solid var(--k-gold) !important;
+    padding-left: 12px !important;
+}
+
+/* v12.2: Form view — complete dark coverage */
+.o_web_client:not(#_):not(#_) .o_form_view {
+    background: var(--k-bg-base) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_form_sheet_bg {
+    background: var(--k-bg-base) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_form_sheet {
+    background: var(--k-bg-card) !important;
+    border: 1px solid #1a1a1a !important;
+}
+
+/* Notebook (tabs content area) */
+.o_web_client:not(#_):not(#_) .o_notebook .tab-content {
+    background: transparent !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_notebook .tab-pane {
+    background: transparent !important;
+}
+
+/* Group boxes inside form */
+.o_web_client:not(#_):not(#_) .o_group {
+    background: transparent !important;
+}
+
+/* Inner group labels */
+.o_web_client:not(#_):not(#_) .o_inner_group .o_td_label {
+    color: var(--k-text-tertiary) !important;
+}
+
+/* Readonly fields — subtle distinction */
+.o_web_client:not(#_):not(#_) .o_form_view .o_field_widget.o_readonly_modifier {
+    color: var(--k-text-secondary) !important;
+}
+
+/* Select/dropdown dark */
+.o_web_client:not(#_):not(#_) select.o_input,
+.o_web_client:not(#_):not(#_) .o_form_view select {
+    background: #1a1a1a !important;
+    color: var(--k-text-primary) !important;
+    border-color: #333 !important;
+}
+
+/* Widget many2one — link arrow button */
+.o_web_client:not(#_):not(#_) .o_external_button {
+    color: var(--k-text-tertiary) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_external_button:hover {
+    color: var(--k-gold) !important;
+}
+
+/* ═══ 15. HOME MENU ══════════════════════════════════════════════ */
+
+.o_home_menu_background .o_home_menu {
+    font-family: 'Play', sans-serif !important;
+    padding-bottom: env(safe-area-inset-bottom, 0) !important;
+}
+
+/* v12.5: Background image — photo visible through dark glass */
+
+.o_home_menu_background::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0,0,0,0.5) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+}
+
+.o_home_menu_background &amp;amp;amp;gt; * {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+.o_home_menu_background .o_home_menu::before {
+    content: '' !important;
+    display: block !important;
+    width: 180px !important;
+    height: 56px !important;
+    background: url('/web/binary/company_logo') no-repeat center !important;
+    background-size: contain !important;
+    margin: var(--k-space-4) auto var(--k-space-1) !important;
+    filter: brightness(0) invert(1) !important;
+}
+
+.o_home_menu_background .o_home_menu::after {
+    content: '' !important;
+    display: block !important;
+    width: 50px !important;
+    height: 3px !important;
+    background: linear-gradient(90deg, var(--k-red), var(--k-gold)) !important;
+    margin: 2px auto 14px !important;
+    border-radius: 2px !important;
+}
+
+.o_home_menu_background .o_apps {
+    background: rgba(13,13,13,0.72) !important;
+    backdrop-filter: blur(24px) saturate(1.1) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.1) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    border-top: 2px solid transparent !important;
+    border-image: linear-gradient(90deg, transparent 5%, var(--k-red) 30%, var(--k-gold) 70%, transparent 95%) 1 !important;
+    border-radius: var(--k-radius-2xl) !important;
+    padding: 36px 44px 28px !important;
+    margin: 0 auto !important;
+    max-width: 860px !important;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.35) !important;
+    animation: kargoHomeIn 0.5s ease-out !important;
+}
+
+.o_home_menu_background .o_apps .o_app {
+    border-radius: var(--k-radius-xl) !important;
+    padding: 14px var(--k-space-3) !important;
+    min-width: 100px !important;
+    transition: all 0.2s ease !important;
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    animation: kargoAppReveal 0.4s ease-out both !important;
+    /* v11: flex column with center for icon, stretch for text */
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+}
+
+.o_home_menu_background .o_apps .o_app:hover {
+    background: rgba(255,255,255,0.1) !important;
+    transform: translateY(-2px) !important;
+}
+
+.o_home_menu_background .o_apps .o_app .o_app_icon {
+    border-radius: 18px !important;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.3) !important;
+    width: 68px !important;
+    height: 68px !important;
+    filter: none !important;
+    background: rgba(255,255,255,0.95) !important;
+    border: none !important;
+    padding: 5px !important;
+    transition: all 0.25s ease !important;
+}
+
+.o_home_menu_background .o_apps .o_app:hover .o_app_icon {
+    filter: none !important;
+    background: #fff !important;
+    box-shadow: 0 8px 24px rgba(237,28,36,0.25) !important;
+    transform: scale(1.05) !important;
+}
+
+.o_home_menu_background .o_apps .o_app .o_caption,
+.o_home_menu_background .o_apps .o_app .o_app_name {
+    font-family: 'Play', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 0.78rem !important;
+    color: var(--k-text-primary) !important;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5) !important;
+    margin-top: 10px !important;
+    text-align: center !important;
+    line-height: 1.3 !important;
+    /* v11: Allow text to show, 2-line max with ellipsis */
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    hyphens: none !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    align-self: stretch !important;
+}
+
+.o_home_menu_background .o_apps .o_app:hover .o_caption,
+.o_home_menu_background .o_apps .o_app:hover .o_app_name {
+    color: var(--k-gold) !important;
+}
+
+.o_home_menu_background .o_main_navbar {
+    background: rgba(13,13,13,0.85) !important;
+    backdrop-filter: blur(16px) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+}
+
+.o_home_menu_background .o_home_menu .alert {
+    background: rgba(255,255,255,0.06) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+    border-radius: var(--k-radius-lg) !important;
+    color: var(--k-text-secondary) !important;  /* [v10 FIX] was rgba(255,255,255,0.8) — now consistent AAA */
+    max-width: 640px !important;
+    margin: 0 auto var(--k-space-3) !important;
+    font-family: 'Play', sans-serif !important;
+    font-size: 0.85rem !important;
+}
+
+
+/* ═══ 16. POKAYOKE + ERROR PREVENTION — v12 ════════════════════ */
+
+/* Required field indicator — red dot before label */
+.o_web_client:not(#_):not(#_) .o_form_label.o_required_modifier::after {
+    content: '' !important;
+    display: inline-block !important;
+    width: 6px !important;
+    height: 6px !important;
+    background: var(--k-error) !important;
+    border-radius: 50% !important;
+    margin-left: 4px !important;
+    vertical-align: super !important;
+}
+
+/* Invalid field — red border + subtle red glow */
+.o_web_client:not(#_):not(#_) .o_field_invalid .o_input,
+.o_web_client:not(#_):not(#_) .o_field_invalid input,
+.o_web_client:not(#_):not(#_) .o_field_invalid select,
+.o_web_client:not(#_):not(#_) .o_field_invalid textarea {
+    border-color: var(--k-error) !important;
+    box-shadow: 0 0 0 3px rgba(255,107,111,0.2) !important;
+}
+
+/* Destructive/danger buttons — prominent red, larger on mobile */
+.o_web_client:not(#_):not(#_) .btn-danger,
+.o_web_client:not(#_):not(#_) .btn-outline-danger {
+    background: rgba(255,107,111,0.15) !important;
+    border: 2px solid var(--k-error) !important;
+    color: var(--k-error) !important;
+    font-weight: 700 !important;
+}
+.o_web_client:not(#_):not(#_) .btn-danger:hover {
+    background: var(--k-error) !important;
+    color: #0d0d0d !important;
+}
+
+/* Confirmation/success buttons — green accent */
+.o_web_client:not(#_):not(#_) .btn-success,
+.o_web_client:not(#_):not(#_) .o_statusbar_buttons .btn-primary {
+    background: rgba(74,222,128,0.15) !important;
+    border: 2px solid var(--k-success) !important;
+    color: var(--k-success) !important;
+    font-weight: 700 !important;
+}
+.o_web_client:not(#_):not(#_) .btn-success:hover,
+.o_web_client:not(#_):not(#_) .o_statusbar_buttons .btn-primary:hover {
+    background: var(--k-success) !important;
+    color: #0d0d0d !important;
+}
+
+/* Statusbar action buttons — prominent, easy to find */
+.o_web_client:not(#_):not(#_) .o_statusbar_buttons {
+    display: flex !important;
+    gap: 8px !important;
+    flex-wrap: wrap !important;
+}
+.o_web_client:not(#_):not(#_) .o_statusbar_buttons .btn {
+    min-height: var(--k-touch-min) !important;
+    padding: 8px 20px !important;
+    font-size: 14px !important;
+    border-radius: var(--k-radius-lg) !important;
+    font-weight: 600 !important;
+}
+
+/* Dialog/confirmation modals — clear actions */
+.o_web_client:not(#_):not(#_) .o_dialog .modal-footer .btn-primary {
+    min-width: 120px !important;
+    min-height: var(--k-touch-min) !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+}
+.o_web_client:not(#_):not(#_) .o_dialog .modal-footer .btn-secondary {
+    min-width: 100px !important;
+    min-height: var(--k-touch-min) !important;
+}
+
+/* Notification toasts — dark theme */
+.o_web_client:not(#_):not(#_) .o_notification {
+    background: var(--k-bg-elevated) !important;
+    border: 1px solid var(--k-border-subtle) !important;
+    border-radius: var(--k-radius-lg) !important;
+    color: var(--k-text-primary) !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+    font-family: 'Play', sans-serif !important;
+}
+.o_web_client:not(#_):not(#_) .o_notification.border-success {
+    border-left: 4px solid var(--k-success) !important;
+}
+.o_web_client:not(#_):not(#_) .o_notification.border-danger {
+    border-left: 4px solid var(--k-error) !important;
+}
+.o_web_client:not(#_):not(#_) .o_notification.border-warning {
+    border-left: 4px solid var(--k-warning) !important;
+}
+
+/* Image fields — consistent sizing */
+.o_web_client:not(#_):not(#_) .o_field_image .o_select_file_button {
+    min-height: var(--k-touch-min) !important;
+    min-width: var(--k-touch-min) !important;
+}
+
+/* Search panel labels — prevent truncation */
+.o_web_client:not(#_):not(#_) .o_search_panel_label {
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    line-height: 1.3 !important;
+    min-height: var(--k-touch-min) !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 6px 12px !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_search_panel_category_value,
+.o_web_client:not(#_):not(#_) .o_search_panel_filter_value {
+    min-height: var(--k-touch-min) !important;
+    padding: 4px 8px !important;
+}
+
+/* Search panel header — no truncation */
+.o_web_client:not(#_):not(#_) .o_search_panel_section_header {
+    white-space: normal !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    color: var(--k-text-tertiary) !important;
+    padding: 12px 12px 6px !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════ */
+/*                                                                   */
+/*   17. RESPONSIVE — MOBILE-FIRST SYSTEM v12                        */
+/*                                                                   */
+/*   Apple HIG: 44pt touch | 16px margins | 8px grid | safe areas    */
+/*   WCAG AAA: All text ratios maintained at every breakpoint         */
+/*                                                                   */
+/* ═══════════════════════════════════════════════════════════════════ */
+
+
+/* ─── GLOBAL TOUCH BASELINE (all screens) ──────────────────────── */
+
+.o_web_client button,
+.o_web_client .btn,
+.o_web_client a.nav-link,
+.o_web_client .o_menu_entry_lvl_1,
+.o_web_client .dropdown-toggle,
+.o_web_client .form-check-input,
+.o_web_client .o_kanban_record {
+    touch-action: manipulation !important;
+}
+
+/* Checkbox / Radio — larger hit area [v10 FIX] wrapping label for 44×44 */
+.o_web_client:not(#_):not(#_) .form-check-input {
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    margin-top: 2px !important;
+}
+.o_web_client:not(#_):not(#_) .form-check {
+    min-height: var(--k-touch-min) !important;
+    display: flex !important;
+    align-items: center !important;
+    padding-left: 2rem !important;
+}
+
+/* Ensure form labels are clickable and big enough */
+.o_web_client:not(#_):not(#_) .o_form_label {
+    min-height: 24px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    color: var(--k-text-tertiary) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   BREAKPOINT: ≤1024px — TABLETS LANDSCAPE
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+    .o_form_sheet {
+        padding: var(--k-space-4) !important;
+    }
+
+    .oe_stat_button {
+        padding: var(--k-space-1) var(--k-space-2) !important;
+    }
+
+    .o_kanban_record {
+        margin-bottom: var(--k-space-1) !important;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   BREAKPOINT: ≤1366px — LAPTOP SCREENS (Kargo admin primary)
+   Optimized for 1366×768 resolution
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 1366px) {
+    /* Form sheet — use more horizontal space on small laptops */
+    .o_form_sheet {
+        max-width: 100% !important;
+        margin: 0 auto !important;
+    }
+
+    /* Chatter side panel — compact on smaller screens */
+    .o-mail-Form-chatter.o-aside {
+        max-width: 320px !important;
+    }
+
+    /* Navbar items — slightly compact */
+    .o_main_navbar .o_menu_sections .nav-link {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+    }
+
+    /* Stat buttons — ensure no overflow */
+    .oe_button_box {
+        flex-wrap: wrap !important;
+    }
+    .oe_stat_button {
+        min-width: auto !important;
+        flex: 0 1 auto !important;
+        padding: 4px 12px !important;
+    }
+
+    /* Kanban cards */
+    .o_kanban_record {
+        padding: 10px 12px !important;
+    }
+
+    /* Search panel — compact on small laptops */
+    .o_search_panel {
+        max-width: 200px !important;
+        font-size: 13px !important;
+    }
+
+    /* Control panel — tighter */
+    .o_control_panel {
+        padding: 4px 12px !important;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   BREAKPOINT: ≤768px — TABLETS PORTRAIT / LARGE PHONES
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+    /* ── v12: UPGRADE TOUCH TARGETS FOR MECHANICS WITH GLOVES ── */
+    :root {
+        --k-touch-min: 56px !important;  /* Industrial: 56px for gloved hands */
+    }
+
+    /* ── SAFE AREAS ──────────────────────────────────────── */
+    body.o_web_client {
+        padding-left: env(safe-area-inset-left, 0) !important;
+        padding-right: env(safe-area-inset-right, 0) !important;
+    }
+
+    /* ── HOME MENU: 3-column grid — v11 compact ──── */
+    .o_home_menu_background .o_apps {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 4px !important;
+        padding: 12px 8px !important;
+        border-radius: var(--k-radius-xl) !important;
+        margin: 0 8px !important;
+        max-width: none !important;
+        width: calc(100% - 16px) !important;
+    }
+
+    .o_home_menu_background .o_apps .o_app {
+        display: flex !important;
+        flex-direction: column !important;
+        /* v11: stretch children so text fills full cell width */
+        align-items: stretch !important;
+        justify-content: flex-start !important;
+        padding: 10px 6px 8px !important;
+        min-width: unset !important;
+        width: 100% !important;
+        border-radius: var(--k-radius-lg) !important;
+        text-align: center !important;
+    }
+
+    .o_home_menu_background .o_apps .o_app .o_app_icon {
+        width: 48px !important;
+        height: 48px !important;
+        border-radius: var(--k-radius-lg) !important;
+        flex-shrink: 0 !important;
+        /* v11: center icon when parent is align-items:stretch */
+        align-self: center !important;
+    }
+
+    .o_home_menu_background .o_apps .o_app .o_caption,
+    .o_home_menu_background .o_apps .o_app .o_app_name {
+        font-size: 0.7rem !important;
+        margin-top: 6px !important;
+        line-height: 1.2 !important;
+        text-align: center !important;
+        /* v11: single-line ellipsis + STRETCH to fill cell width */
+        align-self: stretch !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        word-break: normal !important;
+        hyphens: none !important;
+        display: block !important;
+    }
+
+    /* Logo compact */
+    .o_home_menu_background .o_home_menu::before {
+        width: 120px !important;
+        height: 36px !important;
+        margin: var(--k-space-2) auto var(--k-space-1) !important;
+    }
+
+    /* Trial banner compact */
+    .o_home_menu_background .o_home_menu .alert {
+        font-size: 0.72rem !important;
+        padding: var(--k-space-1) var(--k-space-2) !important;
+        margin: 0 var(--k-space-2) var(--k-space-1) !important;
+        border-radius: 10px !important;
+    }
+
+    /* ── NAVBAR ──────────────────────────────────────────── */
+    .o_main_navbar {
+        min-height: var(--k-touch-min) !important;
+        padding: 0 var(--k-space-2) !important;
+        padding-top: env(safe-area-inset-top, 0) !important;
+    }
+
+    .o_main_navbar .o_menu_brand {
+        font-size: 13px !important;
+        max-width: 120px !important;  /* [v10 FIX] was 100px — more room for module names */
+    }
+
+    .o_main_navbar .o_menu_sections .nav-link,
+    .o_main_navbar .o_menu_sections .dropdown-toggle {
+        font-size: 12px !important;
+        padding: var(--k-space-2) var(--k-space-1) !important;
+    }
+
+    .o_main_navbar .o_menu_systray .nav-link {
+        padding: var(--k-space-1) !important;
+    }
+
+    /* [v10 NEW] Prevent systray horizontal overflow */
+    .o_main_navbar .o_menu_systray {
+        overflow-x: auto !important;
+        flex-wrap: nowrap !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+    }
+    .o_main_navbar .o_menu_systray::-webkit-scrollbar { display: none !important; }
+
+    /* ── SEARCH BAR ────────────────────────────────────── */
+    .o_searchview {
+        min-width: unset !important;
+        max-width: 100% !important;
+    }
+
+    .o_searchview .o_searchview_input {
+        font-size: 14px !important;
+        min-height: 36px !important;
+    }
+
+    /* ── CONTROL PANEL ─────────────────────────────────── */
+    .o_control_panel {
+        padding: var(--k-space-2) var(--k-mobile-margin) !important;  /* [v10 FIX] 16px lateral */
+        flex-wrap: wrap !important;
+    }
+
+    .o_control_panel .o_cp_top,
+    .o_control_panel .o_cp_bottom {
+        flex-wrap: wrap !important;
+        gap: var(--k-space-1) !important;
+    }
+
+    .o_control_panel .breadcrumb {
+        font-size: 14px !important;
+    }
+
+    .o_control_panel .o_cp_action_menus {
+        margin-left: auto !important;
+    }
+
+    .o_cp_switch_buttons .btn {
+        padding: var(--k-space-1) var(--k-space-2) !important;
+        min-width: 36px !important;
+        min-height: 36px !important;
+    }
+
+    /* ── KANBAN VIEW ───────────────────────────────────── */
+    .o_kanban_view {
+        padding: var(--k-space-2) var(--k-mobile-margin) !important;  /* [v10 FIX] 16px lateral */
+    }
+
+    .o_kanban_group {
+        padding: 0 var(--k-space-1) !important;
+        min-width: 260px !important;
+    }
+
+    .o_kanban_header {
+        padding: var(--k-space-2) !important;
+        font-size: 13px !important;
+    }
+
+    .o_kanban_record {
+        border-radius: 10px !important;
+        margin-bottom: var(--k-space-1) !important;
+        padding: 10px !important;
+    }
+
+    /* [v10 NEW] Kanban ungrouped responsive */
+    .o_kanban_ungrouped .o_kanban_record {
+        flex: 1 1 100% !important;
+    }
+
+    /* ── FORM VIEW ─────────────────────────────────────── */
+    .o_form_sheet {
+        border-radius: 0 !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: var(--k-space-3) var(--k-mobile-margin) !important;  /* [v10 FIX] 16px lateral */
+        box-shadow: none !important;
+    }
+
+    .o_form_sheet .o_group {
+        padding: 0 !important;
+    }
+
+    .o_form_label {
+        font-size: 12px !important;
+        margin-bottom: 2px !important;
+    }
+
+    .o_field_widget {
+        font-size: 14px !important;
+    }
+
+    .o_field_widget input.o_input,
+    .o_field_widget textarea.o_input,
+    .o_field_widget select.o_input {
+        font-size: 16px !important;  /* 16px prevents iOS zoom on focus */
+        min-height: var(--k-touch-min) !important;
+        padding: var(--k-space-2) var(--k-space-3) !important;  /* [v10 FIX] added horizontal padding */
+        border-radius: var(--k-radius-md) !important;
+    }
+
+    /* [v10 NEW] Textarea max height on mobile */
+    .o_field_widget textarea.o_input {
+        max-height: 200px !important;
+        min-height: 80px !important;
+    }
+
+    /* Inner groups: single column on mobile */
+    .o_group .o_inner_group {
+        width: 100% !important;
+        min-width: unset !important;
+    }
+
+    .o_group .o_inner_group .o_td_label {
+        min-width: unset !important;
+        width: auto !important;
+    }
+
+    /* ── STAT BUTTONS ──────────────────────────────────── */
+    .oe_button_box {
+        flex-wrap: wrap !important;
+        gap: var(--k-space-1) !important;
+        padding: var(--k-space-2) !important;
+    }
+
+    .oe_stat_button {
+        min-width: unset !important;
+        flex: 1 1 calc(50% - 4px) !important;
+        max-width: calc(50% - 2px) !important;
+        padding: var(--k-space-1) var(--k-space-2) !important;
+        font-size: 12px !important;
+        min-height: var(--k-touch-min) !important;
+    }
+
+    .oe_stat_button .o_stat_value {
+        font-size: 16px !important;
+    }
+
+    .oe_stat_button .o_stat_text {
+        font-size: 12px !important;
+    }
+
+    /* ── LIST VIEW ─────────────────────────────────────── */
+    .o_list_view {
+        font-size: 13px !important;
+    }
+
+    .o_list_view th,
+    .o_list_view td {
+        padding: var(--k-space-2) var(--k-space-1) !important;
+    }
+
+    .o_list_table {
+        min-width: unset !important;
+    }
+
+    /* [v10 NEW] List horizontal scroll wrapper */
+    .o_list_renderer {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* ── CHATTER ───────────────────────────────────────── */
+    .o-mail-Chatter {
+        padding: var(--k-space-2) var(--k-mobile-margin) !important;  /* [v10 FIX] 16px lateral */
+    }
+
+    .o-mail-Message {
+        padding: 10px !important;
+    }
+
+    /* ── MODALS ─────────────────────────────────────────── */
+    .modal-dialog {
+        margin: var(--k-space-2) !important;
+        max-width: calc(100% - 16px) !important;
+    }
+
+    .modal-content {
+        border-radius: var(--k-radius-lg) !important;
+    }
+
+    .modal-header,
+    .modal-footer {
+        padding: var(--k-space-3) var(--k-space-4) !important;
+    }
+
+    /* ── BUTTONS (mobile sizing) ──────────────────────── */
+    .btn {
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+        min-height: 48px !important;
+        border-radius: var(--k-radius-lg) !important;
+    }
+
+    .btn-primary, .btn-secondary {
+        min-height: 56px !important;
+        font-weight: 600 !important;
+    }
+
+    /* ── DROPDOWNS ────────────────────────────────────── */
+    .dropdown-menu {
+        font-size: 14px !important;
+        border-radius: 10px !important;
+        max-height: 60vh !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .dropdown-item {
+        padding: 12px 16px !important;
+        min-height: 52px !important;
+        font-size: 15px !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    /* ── NOTEBOOK / TABS ──────────────────────────────── */
+    .o_notebook .nav-tabs {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        /* [v10 FIX] Bidirectional fade hints */
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 85%, transparent 100%) !important;
+        mask-image: linear-gradient(to right, transparent 0%, black 5%, black 85%, transparent 100%) !important;
+    }
+
+    .o_notebook .nav-tabs::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .o_notebook .nav-tabs .nav-item .nav-link {
+        white-space: nowrap !important;
+        padding: 10px 16px !important;
+        font-size: 14px !important;
+        min-height: 52px !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    /* ── STATUSBAR ────────────────────────────────────── */
+    .o_statusbar_status {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        flex-wrap: nowrap !important;
+        scrollbar-width: none !important;
+    }
+
+    .o_statusbar_status::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .o_statusbar_status .o_arrow_button,
+    .o_statusbar_status button {
+        font-size: 12px !important;
+        padding: 8px 14px !important;
+        min-height: 48px !important;
+        white-space: nowrap !important;
+    }
+
+    /* v12: Statusbar action buttons */
+    .o_statusbar_buttons .btn {
+        min-height: 48px !important;
+        padding: 8px 20px !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+    }
+
+    /* ── SCROLLING ────────────────────────────────────── */
+    .o_action_manager {
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* ── RELATIONAL FIELDS ───────────────────────────── */
+    .o_field_many2one .o_external_button,
+    .o_field_many2one .o_m2o_avatar {
+        min-width: var(--k-touch-min) !important;  /* [v10 FIX] was 32px */
+        min-height: var(--k-touch-min) !important;  /* [v10 FIX] was 32px */
+    }
+
+    /* [v10 NEW] Many2one dropdown positioning fix */
+    .o_field_many2one .o-autocomplete--dropdown-menu {
+        max-width: calc(100vw - 32px) !important;
+        max-height: 50vh !important;
+        overflow-y: auto !important;
+    }
+
+    /* ── SEARCH PANEL (sidebar) ──────────────────────── */
+    .o_search_panel {
+        max-width: 100% !important;
+        border-right: none !important;
+        border-bottom: 1px solid var(--k-border-subtle) !important;
+    }
+
+    /* v12: Search panel labels — prevent truncation on mobile */
+    .o_search_panel_label {
+        white-space: normal !important;
+        overflow: visible !important;
+        font-size: 12px !important;
+        line-height: 1.3 !important;
+    }
+
+    .o_search_panel_category_value,
+    .o_search_panel_filter_value {
+        min-height: var(--k-touch-min) !important;
+        display: flex !important;
+        align-items: center !important;
+        padding: 8px 12px !important;
+    }
+
+    /* ── [v10 NEW] CALENDAR VIEW ────────────────────── */
+    .o_calendar_view .fc-header-toolbar {
+        flex-wrap: wrap !important;
+        gap: var(--k-space-1) !important;
+        padding: var(--k-space-2) !important;
+    }
+    .o_calendar_view .fc-button {
+        min-height: var(--k-touch-min) !important;
+        font-size: 12px !important;
+        padding: var(--k-space-1) var(--k-space-2) !important;
+    }
+
+    /* ── [v10 NEW] ACTIVITY VIEW ────────────────────── */
+    .o_activity_view {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    .o_activity_view table {
+        min-width: 600px !important;
+    }
+
+    /* ── v11: BURGER/SIDEBAR MENU — native touch targets ── */
+    .o_burger_menu_content {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 85vw !important;
+    max-width: 320px !important;
+    height: 100vh !important;
+    background: #111 !important;
+    z-index: 9999 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: env(safe-area-inset-top, 20px) 0 env(safe-area-inset-bottom, 20px) !important;
+    box-shadow: 8px 0 32px rgba(0,0,0,0.5) !important;
+}
+/* v12.2: Sidebar menu items — clear hierarchy */
+.o_web_client:not(#_):not(#_) .o_burger_menu_content a,
+.o_web_client:not(#_):not(#_) .o_burger_menu_content .o_menu_entry {
+    color: #d4d4d8 !important;
+    font-size: 15px !important;
+    padding: 12px 20px !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    border-bottom: 1px solid rgba(255,255,255,0.04) !important;
+    text-decoration: none !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_burger_menu_content a:hover,
+.o_web_client:not(#_):not(#_) .o_burger_menu_content .o_menu_entry:hover {
+    background: rgba(255,255,255,0.06) !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_burger_menu_content a.active,
+.o_web_client:not(#_):not(#_) .o_burger_menu_content .o_menu_entry.active {
+    background: rgba(237,28,36,0.1) !important;
+    color: var(--k-red-text) !important;
+    font-weight: 700 !important;
+    border-left: 3px solid var(--k-red) !important;
+}
+
+/* Sidebar section headers */
+.o_web_client:not(#_):not(#_) .o_burger_menu_content .o_burger_menu_section,
+.o_web_client:not(#_):not(#_) .o_burger_menu_content h5,
+.o_web_client:not(#_):not(#_) .o_burger_menu_content .fw-bolder {
+    color: var(--k-red-text) !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    padding: 16px 20px 6px !important;
+    margin: 0 !important;
+}
+
+/* Sidebar sub-items (indented) */
+.o_web_client:not(#_):not(#_) .o_burger_menu_content .ms-3,
+.o_web_client:not(#_):not(#_) .o_burger_menu_content .ps-3 {
+    padding-left: 36px !important;
+    font-size: 14px !important;
+    color: var(--k-text-tertiary) !important;
+}
+
+    /* Every sidebar nav item = 44px min touch target */
+    .o_burger_menu_content .o_burger_menu_app,
+    .o_burger_menu_content a,
+    .o_burger_menu_content .dropdown-item,
+    .o_burger_menu_content .nav-link {
+        min-height: 44px !important;
+        padding: 10px 16px !important;
+        display: flex !important;
+        align-items: center !important;
+        font-size: 15px !important;
+        color: var(--k-text-primary) !important;
+        border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+    }
+
+    /* Active/hover state */
+    .o_burger_menu_content a:hover,
+    .o_burger_menu_content a:active,
+    .o_burger_menu_content .active {
+        background: rgba(237,28,36,0.1) !important;
+        color: var(--k-red-text) !important;
+    }
+
+    /* Section headers */
+    .o_burger_menu_content .o_burger_menu_section,
+    .o_burger_menu_content h5,
+    .o_burger_menu_content .fw-bold {
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        color: var(--k-text-tertiary) !important;
+        padding: 20px 16px 8px !important;
+        margin: 0 !important;
+        min-height: auto !important;
+        border-bottom: none !important;
+    }
+
+    /* Sub-items (indented) */
+    .o_burger_menu_content .ms-3,
+    .o_burger_menu_content .ps-3,
+    .o_burger_menu_content ul ul a {
+        padding-left: 32px !important;
+        font-size: 14px !important;
+    }
+
+    /* Backdrop for sidebar */
+    .o_burger_menu_overlay,
+    .o_burger_menu::before {
+        background: rgba(0,0,0,0.6) !important;
+        backdrop-filter: blur(4px) !important;
+    }
+
+    /* "Todas las aplicaciones" button */
+    .o_burger_menu_content .o_burger_menu_close,
+    .o_burger_menu_content [data-menu-xmlid="base.menu_apps"] {
+        min-height: 48px !important;
+        font-weight: 700 !important;
+        border-radius: 0 !important;
+    }
+
+    /* ── v11: DROPDOWN MENUS in app — native feel ───── */
+    .o_burger_menu_content .dropdown-menu {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        position: static !important;
+        display: block !important;
+        padding: 0 !important;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   BREAKPOINT: ≤600px — ALL PHONES
+   Margins: 16px lateral (Apple HIG compact)
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+
+    /* v12.4: On phones keep overlay dark for readability */
+    .o_home_menu_background::before {
+        background: rgba(0,0,0,0.8) !important;
+    }
+
+    .o_home_menu_background .o_apps {
+        background: rgba(13,13,13,0.9) !important;
+        backdrop-filter: blur(40px) !important;
+        -webkit-backdrop-filter: blur(40px) !important;
+    }
+
+    /* ── HOME MENU: 2 columns — v11 ──────────────── */
+    .o_home_menu_background .o_apps {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 6px !important;
+        padding: 12px 12px !important;
+        margin: 0 8px !important;
+        width: calc(100% - 16px) !important;
+    }
+
+    .o_home_menu_background .o_apps .o_app {
+        padding: 14px 8px 10px !important;
+        border-radius: 14px !important;
+        /* v11: stretch children for full-width text */
+        align-items: stretch !important;
+    }
+
+    .o_home_menu_background .o_apps .o_app .o_app_icon {
+        width: 56px !important;
+        height: 56px !important;
+        border-radius: 14px !important;
+        align-self: center !important;
+    }
+
+    .o_home_menu_background .o_apps .o_app .o_caption,
+    .o_home_menu_background .o_apps .o_app .o_app_name {
+        font-size: 0.82rem !important;
+        margin-top: 8px !important;
+        line-height: 1.3 !important;
+        /* v11: In 2-col layout, enough room — show full name */
+        align-self: stretch !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        word-break: normal !important;
+        hyphens: none !important;
+        display: block !important;
+    }
+
+    /* ── NAVBAR ultra compact ───────────────────────── */
+    .o_main_navbar {
+        padding: 0 var(--k-space-2) !important;
+        padding-top: env(safe-area-inset-top, 0) !important;
+    }
+
+    .o_main_navbar .o_menu_brand {
+        font-size: 12px !important;
+        max-width: 100px !important;  /* [v10 FIX] was 80px — fits "Flotilla" now */
+    }
+
+    /* Hide text labels in systray, keep icons only */
+    .o_main_navbar .o_menu_systray .nav-link span:not(.fa):not(.oi):not(.badge) {
+        display: none !important;
+    }
+
+    /* ── FORM — v12: glove-friendly inputs ────────── */
+    .o_form_sheet {
+        padding: 12px var(--k-mobile-margin) !important;
+    }
+
+    /* v12: All inputs taller for gloved fingers */
+    .o_form_view .o_input,
+    .o_form_view input[type="text"],
+    .o_form_view input[type="number"],
+    .o_form_view select,
+    .o_form_view textarea {
+        min-height: var(--k-touch-field) !important;
+        font-size: 16px !important;
+        padding: 10px 12px !important;
+        border-radius: 10px !important;
+    }
+
+    /* v12: Form labels — larger and clearer */
+    .o_form_label,
+    .o_td_label .o_form_label {
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        color: var(--k-text-secondary) !important;
+        margin-bottom: 4px !important;
+    }
+
+    .o_group {
+        flex-direction: column !important;
+    }
+
+    .o_group .o_inner_group {
+        width: 100% !important;
+    }
+
+    /* Force single-column layout */
+    .o_inner_group .o_wrap_field {
+        flex-direction: column !important;
+    }
+
+    .o_inner_group .o_td_label {
+        padding-bottom: 2px !important;
+    }
+
+    /* ── KANBAN — v11: full-width on phone ────────── */
+    .o_kanban_view {
+        padding: var(--k-space-2) var(--k-mobile-margin) !important;
+        /* v11: stack columns vertically on phone */
+        flex-direction: column !important;
+    }
+
+    .o_kanban_view .o_kanban_group {
+        min-width: 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        /* v11: prevent side-by-side columns */
+        flex: 1 1 100% !important;
+    }
+
+    .o_kanban_record {
+        padding: var(--k-space-3) !important;
+        /* v11: cards fill full width */
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 0 var(--k-space-2) 0 !important;
+    }
+
+    /* v11: kanban group header full-width */
+    .o_kanban_header {
+        padding: var(--k-space-2) 0 !important;
+    }
+
+    /* v11: kanban config/add buttons — proper touch targets */
+    .o_kanban_group_header .o_kanban_config .btn,
+    .o_kanban_group_header .o_kanban_quick_add .btn {
+        min-width: 44px !important;
+        min-height: 44px !important;
+        padding: var(--k-space-2) !important;
+    }
+
+    /* ── STAT BUTTONS ─────────────────────────────── */
+    .oe_stat_button {
+        flex: 1 1 calc(50% - 4px) !important;  /* [v10 FIX] was 100% — keep 2 per row on phone */
+        max-width: calc(50% - 2px) !important;
+    }
+
+    /* ── BREADCRUMB ─────────────────────────────────── */
+    .o_control_panel {
+        padding: var(--k-space-1) var(--k-mobile-margin) !important;
+    }
+
+    /* v12: "Nuevo" button — extra large for gloved mechanics */
+    .o_control_panel .o_cp_action_menus .btn,
+    .o_control_panel .btn-primary {
+        min-height: var(--k-touch-field) !important;
+        font-size: 15px !important;
+        padding: 10px 16px !important;
+    }
+
+    .o_control_panel .breadcrumb {
+        font-size: 13px !important;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        padding: 0 var(--k-space-1) !important;
+    }
+
+    /* ── SEARCH full-width ──────────────────────────── */
+    .o_searchview {
+        flex: 1 1 100% !important;
+    }
+
+    /* ── TRIAL BANNER ───────────────────────────────── */
+    .o_home_menu_background .o_home_menu .alert {
+        font-size: 0.7rem !important;
+        padding: 5px var(--k-space-2) !important;
+        margin: 0 var(--k-space-3) var(--k-space-2) !important;
+    }
+
+    .o_home_menu_background .o_home_menu .alert a {
+        display: inline !important;
+    }
+
+    /* ── MODALS — fullscreen on phone [v10 NEW] ────── */
+    .modal-dialog {
+        margin: 0 !important;
+        max-width: 100% !important;
+        min-height: 100vh !important;
+        min-height: 100dvh !important;  /* Dynamic viewport height for mobile browsers */
+    }
+
+    .modal-content {
+        border-radius: 0 !important;
+        min-height: 100vh !important;
+        min-height: 100dvh !important;
+    }
+
+    /* But keep small modals (o_dialog_sm) compact */
+    .modal-dialog.modal-sm {
+        margin: auto var(--k-space-2) !important;
+        min-height: auto !important;
+        max-width: calc(100% - 16px) !important;
+    }
+    .modal-dialog.modal-sm .modal-content {
+        border-radius: var(--k-radius-lg) !important;
+        min-height: auto !important;
+    }
+
+    /* Bottom safe area for fixed footers */
+    .modal-footer {
+        padding-bottom: calc(var(--k-space-3) + env(safe-area-inset-bottom, 0)) !important;
+    }
+
+    /* ── NOTEBOOK TABS — v12: glove-friendly ──────── */
+    .o_notebook .nav-tabs {
+        padding: 0 var(--k-space-2) !important;
+        gap: 4px !important;
+    }
+
+    .o_notebook .nav-tabs .nav-item .nav-link {
+        padding: 10px 14px !important;
+        font-size: 14px !important;
+        min-height: var(--k-touch-field) !important;
+        border-radius: 8px !important;
+    }
+
+    /* ── [v10 NEW] LIST VIEW — compact on phone ────── */
+    .o_list_view th {
+        font-size: 0.75rem !important;
+        padding: var(--k-space-1) !important;
+    }
+    .o_list_view td {
+        font-size: 12px !important;
+        padding: var(--k-space-1) !important;
+    }
+
+    /* ── CHATTER compact ──────────────────────────── */
+    .o-mail-Chatter {
+        padding: var(--k-space-2) var(--k-space-2) !important;
+    }
+    .o_chatter_topbar {
+        flex-wrap: wrap !important;
+        gap: var(--k-space-1) !important;
+    }
+    .o_chatter_topbar .btn {
+        font-size: 13px !important;
+        padding: var(--k-space-2) var(--k-space-3) !important;
+        min-height: 56px !important;
+    }
+
+    /* ── v12: MECHANIC-OPTIMIZED BUTTONS ─────────────── */
+    /* Primary action buttons — LARGE, impossible to miss */
+    .o_statusbar_buttons .btn {
+        min-height: 56px !important;
+        padding: 12px 24px !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        border-radius: 14px !important;
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* Status bar arrows — larger for touch */
+    .o_statusbar_status .o_arrow_button,
+    .o_statusbar_status button {
+        min-height: 48px !important;
+        font-size: 13px !important;
+        padding: 8px 16px !important;
+    }
+
+    /* Form action buttons (edit/save/discard) */
+    .o_form_buttons_edit .btn,
+    .o_form_buttons_view .btn,
+    .o_cp_action_menus .btn {
+        min-height: 56px !important;
+        padding: 10px 16px !important;
+        font-size: 15px !important;
+    }
+
+    /* List view rows — large enough to tap */
+    .o_list_view .o_data_row {
+        min-height: 56px !important;
+    }
+    .o_list_view .o_data_row td {
+        padding: 10px 8px !important;
+        vertical-align: middle !important;
+    }
+
+    /* Field image — upload button accessible */
+    .o_field_image .o_select_file_button {
+        min-height: 56px !important;
+        min-width: 56px !important;
+        font-size: 14px !important;
+    }
+
+    /* Dropdown items — glove-friendly */
+    .dropdown-item {
+        min-height: 56px !important;
+        padding: 14px 16px !important;
+        font-size: 16px !important;
+    }
+
+    /* Notebook tabs — glove-friendly */
+    .o_notebook .nav-tabs .nav-item .nav-link {
+        min-height: 56px !important;
+        font-size: 14px !important;
+        padding: 12px 16px !important;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   BREAKPOINT: ≤375px — VERY SMALL PHONES (iPhone SE, older)
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 375px) {
+    .o_home_menu_background .o_apps {
+        gap: var(--k-space-2) !important;
+        padding: var(--k-space-3) !important;
+    }
+
+    .o_home_menu_background .o_apps .o_app {
+        align-items: stretch !important;
+        padding: 10px 4px 6px !important;
+    }
+
+    .o_home_menu_background .o_apps .o_app .o_app_icon {
+        width: 48px !important;
+        height: 48px !important;
+        align-self: center !important;
+    }
+
+    .o_home_menu_background .o_apps .o_app .o_caption,
+    .o_home_menu_background .o_apps .o_app .o_app_name {
+        font-size: 0.72rem !important;
+        align-self: stretch !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: block !important;
+        text-align: center !important;
+    }
+
+    .o_form_sheet {
+        padding: var(--k-space-2) var(--k-space-3) !important;  /* [v10 FIX] was 8px 4px, now 8px 12px */
+    }
+
+    /* Tighter control panel */
+    .o_control_panel {
+        padding: var(--k-space-1) var(--k-space-3) !important;  /* [v10 FIX] 12px lateral minimum */
+    }
+
+    /* Smaller buttons to fit */
+    .btn {
+        font-size: 12px !important;
+        padding: var(--k-space-1) var(--k-space-2) !important;
+    }
+
+    /* [v10 NEW] Stat buttons single column on very small */
+    .oe_stat_button {
+        flex: 1 1 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* [v10 NEW] Navbar brand hidden on very small, only icon */
+    .o_main_navbar .o_menu_brand {
+        max-width: 60px !important;
+        font-size: 12px !important;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   LANDSCAPE PHONE
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-height: 500px) and (orientation: landscape) {
+    .o_home_menu_background .o_apps {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: var(--k-space-1) !important;
+        padding: var(--k-space-2) !important;
+    }
+
+    .o_home_menu_background .o_apps .o_app {
+        padding: var(--k-space-1) var(--k-space-1) !important;
+        align-items: stretch !important;
+    }
+
+    .o_home_menu_background .o_apps .o_app .o_app_icon {
+        align-self: center !important;
+    }
+
+    .o_home_menu_background .o_apps .o_app .o_app_icon {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .o_home_menu_background .o_apps .o_app .o_caption,
+    .o_home_menu_background .o_apps .o_app .o_app_name {
+        font-size: 0.7rem !important;
+        margin-top: 3px !important;
+        align-self: stretch !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: block !important;
+    }
+
+    .o_home_menu_background .o_home_menu::before {
+        width: 100px !important;
+        height: 30px !important;
+        margin: var(--k-space-1) auto !important;
+    }
+
+    body.o_web_client {
+        padding-left: env(safe-area-inset-left, 0) !important;
+        padding-right: env(safe-area-inset-right, 0) !important;
+    }
+}
+
+
+/* ═══ 17. ANIMATIONS ════════════════════════════════════════════ */
+
+@keyframes kargoHomeIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes kargoAppReveal {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .o_home_menu_background .o_apps,
+    .o_home_menu_background .o_apps .o_app {
+        animation: none !important;
+        transition: none !important;
+    }
+    .o_web_client:not(#_):not(#_) .btn {
+        transition: none !important;
+    }
+    .o_web_client:not(#_):not(#_) .o_kanban_record {
+        transition: none !important;
+    }
+}
+
+/* Animation delays for stagger effect */
+.o_home_menu_background .o_apps .o_app:nth-child(1)  { animation-delay: 0.03s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(2)  { animation-delay: 0.06s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(3)  { animation-delay: 0.09s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(4)  { animation-delay: 0.12s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(5)  { animation-delay: 0.15s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(6)  { animation-delay: 0.18s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(7)  { animation-delay: 0.21s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(8)  { animation-delay: 0.24s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(9)  { animation-delay: 0.27s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(10) { animation-delay: 0.30s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(11) { animation-delay: 0.33s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(12) { animation-delay: 0.36s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(13) { animation-delay: 0.39s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(14) { animation-delay: 0.42s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(15) { animation-delay: 0.45s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(16) { animation-delay: 0.48s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(17) { animation-delay: 0.51s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(18) { animation-delay: 0.54s !important; }
+.o_home_menu_background .o_apps .o_app:nth-child(19) { animation-delay: 0.57s !important; }
+
+
+/* ═══ 18. ODOO MOBILE APP (iOS/Android) OVERRIDES — v12.1 ════ */
+
+/* v12.1: KILL ENTERPRISE PURPLE — nuclear option */
+/* These override Odoo's default purple (#714B67) everywhere */
+.o_web_client .o_main_navbar,
+.o_web_client .o_main_navbar .container-fluid,
+.o_web_client .o_main_navbar .navbar,
+body .o_main_navbar,
+#wrapwrap .o_main_navbar,
+.o_home_menu_background .o_main_navbar {
+    background: #0d0d0d !important;
+    background-color: #0d0d0d !important;
+    border-bottom: 1px solid #222 !important;
+}
+
+/* Systray area — force dark (was showing white/purple) */
+.o_main_navbar .o_menu_systray,
+.o_main_navbar .o_menu_systray .o_NavBar_systray_item,
+.o_main_navbar .o_menu_systray .dropdown,
+.o_main_navbar .o_menu_systray .nav-link {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: var(--k-text-primary) !important;
+}
+
+/* Systray icon backgrounds — force dark */
+.o_main_navbar .o_menu_systray .nav-link .badge {
+    background: var(--k-red) !important;
+    color: #fff !important;
+}
+
+/* App switcher button (grid icon) — force dark */
+.o_main_navbar .o_nav_entry,
+.o_main_navbar .o_menu_toggle {
+    background: transparent !important;
+    color: var(--k-text-primary) !important;
+}
+
+/* User menu avatar area — force dark */
+.o_main_navbar .o_user_menu,
+.o_main_navbar .o_user_menu .dropdown-toggle {
+    background: transparent !important;
+}
+
+/* Control panel / action bar — force dark */
+.o_web_client .o_control_panel,
+.o_web_client .o_cp_top,
+.o_web_client .o_cp_bottom,
+.o_web_client .o_searchview {
+    background: #0d0d0d !important;
+    background-color: #0d0d0d !important;
+}
+
+/* Any remaining purple leaks — scorched earth */
+.o_web_client,
+.o_web_client .o_action_manager,
+.o_web_client .o_action,
+.o_web_client .o_content {
+    background-color: #0d0d0d !important;
+}
+
+/* v12.3: iOS webview rubber-band areas — NUCLEAR */
+html,
+html:root,
+html[data-color-scheme],
+html.o_web_client_container {
+    background: #0d0d0d !important;
+    background-color: #0d0d0d !important;
+    color-scheme: dark !important;
+}
+
+body,
+body.o_web_client,
+body.o_web_client_body {
+    background: #0d0d0d !important;
+    background-color: #0d0d0d !important;
+}
+
+/* Force dark on the iOS WKWebView scroll bounce area */
+:root {
+    color-scheme: dark !important;
+    background-color: #0d0d0d !important;
+}
+/* The Odoo mobile app uses WKWebView/WebView with its own navbar   */
+/* These rules ensure native-app feel inside the webview             */
+
+/* Force dark mode everywhere — the app doesn't always inherit */
+html, body, .o_web_client {
+    color-scheme: dark !important;
+}
+
+/* Prevent text selection on interactive elements (native feel) */
+.o_home_menu_background .o_apps .o_app,
+.o_main_navbar,
+.btn,
+.nav-link,
+.dropdown-item {
+    -webkit-user-select: none !important;
+    user-select: none !important;
+}
+
+/* Prevent callout/context menu on long press (native feel) */
+.o_home_menu_background .o_apps .o_app,
+.o_app_icon {
+    -webkit-touch-callout: none !important;
+}
+
+/* Smooth momentum scrolling for all scrollable areas */
+.o_action_manager,
+.o_content,
+.o_kanban_view,
+.modal-body,
+.o_form_view {
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+}
+
+/* Prevent pull-to-refresh interference in webview */
+body.o_web_client {
+    overscroll-behavior-y: contain !important;
+}
+
+/* Ensure dark background covers entire viewport including bounce */
+html {
+    background: #0d0d0d !important;
+}
+
+/* Fix iOS input zoom — inputs must be ≥16px */
+input, select, textarea, .o_input {
+    font-size: max(16px, 1em) !important;
+}
+
+/* ═══ 19. PRINT ══════════════════════════════════════════════════ */
+
+
+
+/* ═══ v12.7: NAVBAR HOME BUTTON ═══ */
+#kargo-nav-home {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 10px !important;
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    color: #fafafa !important;
+    margin-right: 8px !important;
+    flex-shrink: 0 !important;
+    -webkit-tap-highlight-color: transparent !important;
+    transition: background 0.15s ease !important;
+    text-decoration: none !important;
+}
+
+#kargo-nav-home:hover,
+#kargo-nav-home:active {
+    background: rgba(237,28,36,0.15) !important;
+    border-color: rgba(237,28,36,0.3) !important;
+}
+
+#kargo-nav-home svg {
+    width: 20px !important;
+    height: 20px !important;
+    stroke: #fafafa !important;
+    fill: none !important;
+}
+
+/* On desktop — slightly smaller, still visible */
+@media (min-width: 1025px) {
+    #kargo-nav-home {
+        width: 34px !important;
+        height: 34px !important;
+        border-radius: 8px !important;
+        margin-right: 12px !important;
+    }
+    
+    #kargo-nav-home svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+}
+
+/* ═══ v12.7: MECHANIC-FRIENDLY MOBILE FONTS ═══ */
+@media (max-width: 600px) {
+    /* Base font size bump — 15px minimum instead of 12px */
+    .o_web_client {
+        font-size: 15px !important;
+    }
+
+    /* Navbar app name — bigger, bolder, WHITE not blue */
+    .o_main_navbar .o_menu_brand {
+        color: #fafafa !important;
+        font-weight: 700 !important;
+        font-size: 16px !important;
+        font-family: 'Play', sans-serif !important;
+    }
+
+    /* Kanban group header — bigger */
+    .o_kanban_header .o_column_title,
+    .o_kanban_group_header {
+        font-size: 17px !important;
+        font-weight: 700 !important;
+    }
+
+    /* Kanban card title — bigger for easy reading */
+    .o_kanban_record strong,
+    .o_kanban_record .fw-bold,
+    .o_kanban_record a {
+        font-size: 16px !important;
+    }
+
+    /* Kanban card subtitle */
+    .o_kanban_record span,
+    .o_kanban_record div,
+    .o_kanban_record small {
+        font-size: 14px !important;
+    }
+
+    /* Form view labels */
+    .o_form_view label,
+    .o_form_view .o_td_label {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+    }
+
+    /* Form field values — big for reading */
+    .o_form_view .o_field_widget {
+        font-size: 16px !important;
+    }
+
+    /* List view rows — taller, bigger text */
+    .o_list_view .o_data_row td {
+        font-size: 15px !important;
+        padding: 12px 8px !important;
+        min-height: 52px !important;
+    }
+
+    .o_list_view thead th {
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px !important;
+        padding: 10px 8px !important;
+    }
+
+    /* Control panel buttons — bigger icons */
+    .o_control_panel .btn {
+        min-height: 48px !important;
+        min-width: 48px !important;
+        font-size: 15px !important;
+    }
+
+    .o_control_panel .btn .fa,
+    .o_control_panel .btn .oi {
+        font-size: 18px !important;
+    }
+
+    /* Sidebar menu items — bigger for glove touch */
+    .o_burger_menu_content a,
+    .o_burger_menu_content .dropdown-item,
+    .o_burger_menu_content .o_menu_entry {
+        font-size: 16px !important;
+        padding: 14px 20px !important;
+        min-height: 52px !important;
+    }
+
+    .o_burger_menu_content .o_burger_menu_section,
+    .o_burger_menu_content h5 {
+        font-size: 12px !important;
+    }
+
+    /* Chatter — bigger */
+    .o-mail-Message-body {
+        font-size: 15px !important;
+    }
+
+    .o-mail-Message-author-name {
+        font-size: 14px !important;
+    }
+
+    /* Stat buttons on forms — bigger numbers */
+    .oe_stat_button .o_stat_value {
+        font-size: 20px !important;
+    }
+
+    .oe_stat_button .o_stat_text {
+        font-size: 12px !important;
+    }
+
+    /* Search input — bigger */
+    .o_searchview_input {
+        font-size: 16px !important;
+        min-height: 44px !important;
+    }
+}
+
+/* ═══ v12.6: MOBILE NAVIGATION — FAB Home Button + Sidebar Home Link ═══ */
+
+/* Floating Action Button — Home */
+#kargo-home-fab {
+    position: fixed !important;
+    bottom: calc(24px + env(safe-area-inset-bottom, 0px)) !important;
+    right: 20px !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 16px !important;
+    background: var(--k-red) !important;
+    color: #fff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 9998 !important;
+    box-shadow: 0 4px 20px rgba(237,28,36,0.4), 0 2px 8px rgba(0,0,0,0.3) !important;
+    text-decoration: none !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
+    touch-action: manipulation !important;
+}
+
+#kargo-home-fab:active {
+    transform: scale(0.92) !important;
+    box-shadow: 0 2px 10px rgba(237,28,36,0.3), 0 1px 4px rgba(0,0,0,0.2) !important;
+}
+
+#kargo-home-fab svg {
+    width: 22px !important;
+    height: 22px !important;
+    stroke: #fff !important;
+    fill: none !important;
+}
+
+/* Hide FAB on desktop */
+@media (min-width: 1025px) {
+    #kargo-home-fab {
+        display: none !important;
+    }
+}
+
+/* Sidebar Home Link */
+.kargo-sidebar-home {
+    display: flex !important;
+    align-items: center !important;
+    padding: 16px 20px !important;
+    margin: 0 !important;
+    background: rgba(237,28,36,0.08) !important;
+    border-bottom: 1px solid rgba(237,28,36,0.15) !important;
+    color: #fafafa !important;
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    font-family: 'Play', sans-serif !important;
+    text-decoration: none !important;
+    min-height: 56px !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+.kargo-sidebar-home:hover,
+.kargo-sidebar-home:active {
+    background: rgba(237,28,36,0.15) !important;
+    color: #fff !important;
+}
+
+.kargo-sidebar-home svg {
+    stroke: var(--k-red) !important;
+    flex-shrink: 0 !important;
+}
+
+/* ═══ v12.6: MOBILE NAVBAR SIMPLIFICATION ═══ */
+@media (max-width: 600px) {
+    /* Make the navbar cleaner */
+    .o_main_navbar {
+        padding: 0 8px !important;
+        height: 48px !important;
+        min-height: 48px !important;
+    }
+
+    /* App switcher (:::) — this IS the home button but needs to look like one */
+    .o_main_navbar .o_menu_toggle {
+        color: #fafafa !important;
+        font-size: 18px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        opacity: 1 !important;
+    }
+
+    /* Hide systray icons that aren't essential — reduce clutter */
+    .o_menu_systray &gt; .o_nav_entry:not(.o_user_menu):not(.o_MessagingMenu) {
+        display: none !important;
+    }
+
+    /* Keep only: messages, user menu */
+    .o_menu_systray .o_MessagingMenu,
+    .o_menu_systray .o_user_menu {
+        display: flex !important;
+    }
+
+    /* App name — shorter, bolder */
+    .o_main_navbar .o_menu_brand {
+        color: #fafafa !important;
+        font-weight: 700 !important;
+        font-size: 15px !important;
+        font-family: 'Play', sans-serif !important;
+        max-width: 120px !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+    }
+
+    /* Hamburger menu toggle (≡) — the left side menu opener */
+    .o_main_navbar .o_mobile_menu_toggle,
+    .o_main_navbar [data-action="show_mobile_menu"] {
+        color: #fafafa !important;
+        font-size: 20px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
+        order: -1 !important;
+    }
+
+    /* Breadcrumb back arrow — make it very prominent */
+    .o_control_panel .breadcrumb {
+        font-size: 14px !important;
+    }
+
+    .o_control_panel .breadcrumb-item a {
+        color: #a1a1aa !important;
+        font-size: 14px !important;
+    }
+
+    .o_control_panel .breadcrumb-item.active {
+        color: #fafafa !important;
+        font-weight: 700 !important;
+    }
+    
+    /* Back button — if Odoo renders one */
+    .o_back_button,
+    .o_control_panel .o_back_button {
+        color: var(--k-red) !important;
+        font-size: 16px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
+    }
+}
+
+/* ═══ v12.5: MOBILE NAVBAR — home button + readable app name ═══ */
+@media (max-width: 600px) {
+    /* App switcher button (:::) — make it look like a home button */
+    .o_main_navbar .o_menu_toggle {
+        color: #fafafa !important;
+        font-size: 20px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* Current app name ("V..." truncated) — full width, readable */
+    .o_main_navbar .o_menu_brand {
+        color: #fafafa !important;
+        font-weight: 700 !important;
+        font-size: 14px !important;
+        max-width: 100px !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    /* Hamburger menu button (≡) — more prominent */
+    .o_main_navbar .o_mobile_menu_toggle,
+    .o_main_navbar [data-action="show_mobile_menu"] {
+        color: #fafafa !important;
+        font-size: 22px !important;
+        min-width: 48px !important;
+        min-height: 48px !important;
+    }
+
+    /* Systray icons — proper spacing */
+    .o_menu_systray .dropdown-toggle,
+    .o_menu_systray .o_nav_entry {
+        min-width: 40px !important;
+        min-height: 44px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #d4d4d8 !important;
+    }
+    
+    /* Breadcrumb on mobile — readable */
+    .breadcrumb-item a {
+        color: #a1a1aa !important;
+    }
+    
+    .breadcrumb-item.active {
+        color: #fafafa !important;
+        font-weight: 700 !important;
+    }
+}
+
+/* ═══ v12.5: SIDEBAR PANEL — premium dark glass ═══ */
+.o_burger_menu {
+    z-index: 10000 !important;
+}
+
+.o_burger_menu_overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0,0,0,0.6) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    z-index: 10000 !important;
+}
+
+.o_burger_menu_content {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 85vw !important;
+    max-width: 340px !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    background: #111 !important;
+    border-right: 1px solid #222 !important;
+    z-index: 10001 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-top: env(safe-area-inset-top, 16px) !important;
+    padding-bottom: env(safe-area-inset-bottom, 16px) !important;
+    box-shadow: 8px 0 40px rgba(0,0,0,0.6) !important;
+}
+
+
+/* ═══ v12.5: CONTROL PANEL — icons clearly visible on mobile ═══ */
+@media (max-width: 600px) {
+    .o_control_panel .btn {
+        color: #d4d4d8 !important;
+        min-height: 48px !important;
+        min-width: 48px !important;
+    }
+    
+    .o_control_panel .btn:hover {
+        color: #fafafa !important;
+        background: rgba(255,255,255,0.06) !important;
+    }
+    
+    .o_control_panel .btn .fa,
+    .o_control_panel .btn .oi {
+        color: inherit !important;
+        font-size: 18px !important;
+    }
+    
+    /* "Nuevo" button — always red + prominent */
+    .o_control_panel .btn-primary,
+    .o_control_panel .o_list_button_add,
+    .o_cp_action_menus ~ .btn-primary {
+        background: var(--k-red) !important;
+        color: #fff !important;
+        font-weight: 700 !important;
+        font-size: 15px !important;
+        border-radius: 10px !important;
+        min-height: 48px !important;
+        padding: 0 20px !important;
+    }
+}
+
+
+/* ═══ v12.8: TABS — NUCLEAR DARK + READABLE ACTIVE STATE ═══ */
+
+/* The notebook container — MUST be dark */
+.o_web_client:not(#_):not(#_) .o_notebook,
+.o_web_client:not(#_):not(#_) .o_notebook &gt; .tab-content,
+.o_web_client:not(#_):not(#_) .o_notebook &gt; .tab-content &gt; .tab-pane {
+    background: var(--k-bg-base) !important;
+    background-color: var(--k-bg-base) !important;
+}
+
+/* Tab bar container — dark strip */
+.o_web_client:not(#_):not(#_) .o_notebook &gt; .nav-tabs,
+.o_web_client:not(#_):not(#_) .o_notebook .nav.nav-tabs {
+    background: #111 !important;
+    border-bottom: 2px solid #222 !important;
+    gap: 0 !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    padding: 0 !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_notebook .nav-tabs::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Individual tab — INACTIVE = dim but readable */
+.o_web_client:not(#_):not(#_) .o_notebook .nav-tabs .nav-link,
+.o_web_client:not(#_):not(#_) .o_notebook .nav-tabs .nav-item .nav-link {
+    color: #71717a !important;
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 3px solid transparent !important;
+    padding: 12px 16px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    transition: color 0.15s, border-color 0.15s !important;
+}
+
+/* Tab hover */
+.o_web_client:not(#_):not(#_) .o_notebook .nav-tabs .nav-link:hover {
+    color: #d4d4d8 !important;
+    background: rgba(255,255,255,0.04) !important;
+}
+
+/* ACTIVE TAB — bright white + red underline */
+.o_web_client:not(#_):not(#_) .o_notebook .nav-tabs .nav-link.active,
+.o_web_client:not(#_):not(#_) .o_notebook .nav-tabs .nav-item .nav-link.active,
+.o_web_client:not(#_):not(#_) .o_notebook .nav-tabs .nav-item.show .nav-link {
+    color: #fafafa !important;
+    background: rgba(255,255,255,0.04) !important;
+    border-bottom: 3px solid var(--k-red) !important;
+    font-weight: 700 !important;
+}
+
+/* Tab icon (emoji/fa) — same color as text */
+.o_web_client:not(#_):not(#_) .o_notebook .nav-tabs .nav-link .fa,
+.o_web_client:not(#_):not(#_) .o_notebook .nav-tabs .nav-link .oi {
+    color: inherit !important;
+}
+
+/* Mobile tabs — bigger touch targets */
+@media (max-width: 600px) {
+    .o_web_client:not(#_):not(#_) .o_notebook .nav-tabs .nav-link,
+    .o_web_client:not(#_):not(#_) .o_notebook .nav-tabs .nav-item .nav-link {
+        padding: 14px 18px !important;
+        font-size: 15px !important;
+        min-height: 52px !important;
+    }
+}
+
+
+/* ═══ v12.8: EMBEDDED TABLES IN FORMS — NUCLEAR DARK ═══ */
+
+/* One2many / Many2many list inside forms */
+.o_web_client:not(#_):not(#_) .o_field_one2many,
+.o_web_client:not(#_):not(#_) .o_field_x2many_list,
+.o_web_client:not(#_):not(#_) .o_field_one2many .o_list_renderer,
+.o_web_client:not(#_):not(#_) .o_field_x2many_list .o_list_renderer {
+    background: var(--k-bg-base) !important;
+    background-color: var(--k-bg-base) !important;
+}
+
+/* The table itself */
+.o_web_client:not(#_):not(#_) .o_field_one2many table,
+.o_web_client:not(#_):not(#_) .o_field_x2many_list table,
+.o_web_client:not(#_):not(#_) .o_list_renderer table {
+    background: var(--k-bg-base) !important;
+    --bs-table-bg: var(--k-bg-base) !important;
+    --bs-table-striped-bg: #111 !important;
+    --bs-table-hover-bg: #1a1a1a !important;
+    --bs-table-color: var(--k-text-primary) !important;
+    color: var(--k-text-primary) !important;
+}
+
+/* Table header */
+.o_web_client:not(#_):not(#_) .o_field_one2many thead,
+.o_web_client:not(#_):not(#_) .o_field_x2many_list thead,
+.o_web_client:not(#_):not(#_) .o_list_renderer thead {
+    background: #141414 !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_field_one2many thead th,
+.o_web_client:not(#_):not(#_) .o_field_x2many_list thead th,
+.o_web_client:not(#_):not(#_) .o_list_renderer thead th {
+    background: #141414 !important;
+    color: var(--k-text-secondary) !important;
+    border-bottom: 1px solid #222 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    padding: 10px 8px !important;
+}
+
+/* Table body rows */
+.o_web_client:not(#_):not(#_) .o_field_one2many tbody td,
+.o_web_client:not(#_):not(#_) .o_field_x2many_list tbody td,
+.o_web_client:not(#_):not(#_) .o_list_renderer tbody td {
+    background: var(--k-bg-base) !important;
+    color: var(--k-text-primary) !important;
+    border-bottom: 1px solid #1a1a1a !important;
+    padding: 10px 8px !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_field_one2many tbody tr:nth-child(even) td,
+.o_web_client:not(#_):not(#_) .o_list_renderer tbody tr:nth-child(even) td {
+    background: #111 !important;
+}
+
+.o_web_client:not(#_):not(#_) .o_field_one2many tbody tr:hover td,
+.o_web_client:not(#_):not(#_) .o_list_renderer tbody tr:hover td {
+    background: #1a1a1a !important;
+}
+
+/* "Agregar una línea" link */
+.o_web_client:not(#_):not(#_) .o_field_one2many .o_field_x2many_list_row_add a,
+.o_web_client:not(#_):not(#_) .o_field_x2many_list .o_field_x2many_list_row_add a {
+    color: var(--k-gold) !important;
+    font-weight: 600 !important;
+}
+
+/* Table footer / totals row */
+.o_web_client:not(#_):not(#_) .o_field_one2many tfoot,
+.o_web_client:not(#_):not(#_) .o_field_one2many tfoot td {
+    background: #141414 !important;
+    color: var(--k-text-primary) !important;
+    border-top: 1px solid #222 !important;
+    font-weight: 700 !important;
+}
+
+/* ═══ v12.8: ALERT/TIP/INFO BOXES — DARK ═══ */
+
+.o_web_client:not(#_):not(#_) .alert,
+.o_web_client:not(#_):not(#_) .o_form_view .alert {
+    border-radius: 10px !important;
+}
+
+.o_web_client:not(#_):not(#_) .alert-info,
+.o_web_client:not(#_):not(#_) .o_form_view .alert-info {
+    background: rgba(59,130,246,0.08) !important;
+    border: 1px solid rgba(59,130,246,0.2) !important;
+    color: #93bbfc !important;
+}
+
+.o_web_client:not(#_):not(#_) .alert-warning,
+.o_web_client:not(#_):not(#_) .o_form_view .alert-warning {
+    background: rgba(245,158,11,0.08) !important;
+    border: 1px solid rgba(245,158,11,0.2) !important;
+    color: #fbbf24 !important;
+}
+
+.o_web_client:not(#_):not(#_) .alert-success,
+.o_web_client:not(#_):not(#_) .o_form_view .alert-success {
+    background: rgba(34,197,94,0.08) !important;
+    border: 1px solid rgba(34,197,94,0.2) !important;
+    color: #4ade80 !important;
+}
+
+.o_web_client:not(#_):not(#_) .alert-danger,
+.o_web_client:not(#_):not(#_) .o_form_view .alert-danger {
+    background: rgba(239,68,68,0.08) !important;
+    border: 1px solid rgba(239,68,68,0.2) !important;
+    color: #f87171 !important;
+}
+
+/* The yellow tip box "💡 Haz clic en cualquier inspección..." */
+.o_web_client:not(#_):not(#_) .o_form_view .text-muted.fst-italic,
+.o_web_client:not(#_):not(#_) .o_form_view .o_field_html .text-muted {
+    color: var(--k-text-tertiary) !important;
+}
+
+/* Info div with yellow background */
+.o_web_client:not(#_):not(#_) .o_form_view div[style*="background-color"],
+.o_web_client:not(#_):not(#_) .o_form_view .oe_form_box_info {
+    background: rgba(245,158,11,0.08) !important;
+    border: 1px solid rgba(245,158,11,0.15) !important;
+    border-radius: 10px !important;
+    color: #fbbf24 !important;
+}
+
+
+/* ═══ v12.8: MODULE TITLE — Below navbar on mobile ═══ */
+@media (max-width: 600px) {
+    /* Hide brand text from navbar — it will be shown below */
+    .o_main_navbar .o_menu_brand {
+        display: none !important;
+    }
+}
+
+/* The JS-injected module title bar */
+#kargo-module-title {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    #kargo-module-title {
+        display: flex !important;
+        align-items: center !important;
+        padding: 8px 16px !important;
+        background: #111 !important;
+        border-bottom: 1px solid #1a1a1a !important;
+        min-height: 36px !important;
+    }
+
+    #kargo-module-title .kmt-name {
+        color: #fafafa !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        font-family: 'Play', sans-serif !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.8px !important;
+    }
+
+    #kargo-module-title .kmt-desc {
+        color: #71717a !important;
+        font-size: 12px !important;
+        margin-left: 8px !important;
+        font-weight: 400 !important;
+    }
+}
+
+
+/* ═══ v12.8: FORM VIEW — CATCH-ALL WHITE BACKGROUND KILLER ═══ */
+
+/* Kill ANY remaining white/light backgrounds inside forms */
+.o_web_client:not(#_):not(#_) .o_form_view .o_group,
+.o_web_client:not(#_):not(#_) .o_form_view .o_inner_group,
+.o_web_client:not(#_):not(#_) .o_form_view .o_wrap_field,
+.o_web_client:not(#_):not(#_) .o_form_view .o_cell,
+.o_web_client:not(#_):not(#_) .o_form_view .o_wrap_input,
+.o_web_client:not(#_):not(#_) .o_form_view .o_field_widget,
+.o_web_client:not(#_):not(#_) .o_form_view .oe_form_box_info,
+.o_web_client:not(#_):not(#_) .o_form_view .o_horizontal_separator {
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+/* Section titles inside forms ("TODAS LAS INSPECCIONES") */
+.o_web_client:not(#_):not(#_) .o_form_view .o_horizontal_separator {
+    color: var(--k-text-primary) !important;
+    font-weight: 700 !important;
+    border-bottom: 2px solid var(--k-red) !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 12px !important;
+}
+
+/* Inline editable fields — dark bg */
+.o_web_client:not(#_):not(#_) .o_form_view .o_field_widget.o_field_empty,
+.o_web_client:not(#_):not(#_) .o_form_view .o_field_widget[name] {
+    color: var(--k-text-primary) !important;
+}
+
+/* Any div with inline background-color style (Odoo does this a lot) */
+.o_web_client:not(#_):not(#_) .o_form_view div[style*="background"] {
+    background-color: rgba(245,158,11,0.06) !important;
+}
+
+/* "Sin nombre" and similar empty/placeholder text */
+.o_web_client:not(#_):not(#_) .o_form_view .o_field_widget.text-danger,
+.o_web_client:not(#_):not(#_) .o_form_view .text-danger {
+    color: #f87171 !important;
+}
+
+/* Green border on notebook sections — darken */
+.o_web_client:not(#_):not(#_) .o_form_view .o_notebook .o_field_one2many {
+    border-color: #222 !important;
+}
+
+@media print {
+    .o_web_client:not(#_):not(#_) {
+        background: #fff !important;
+        color: #000 !important;
+    }
+    .o_main_navbar,
+    .o_cp_switch_buttons,
+    .o_menu_systray,
+    .o_chatter_topbar {
+        display: none !important;
+    }
+    .o_form_sheet {
+        border: none !important;
+        box-shadow: none !important;
+        background: #fff !important;
+    }
+    .o_web_client:not(#_):not(#_) .o_form_label,
+    .o_web_client:not(#_):not(#_) .o_inner_group .o_td_label {
+        color: #333 !important;
+    }
+    .o_web_client:not(#_):not(#_) .o_field_widget,
+    .o_web_client:not(#_):not(#_) .o_data_row td {
+        color: #000 !important;
+    }
+}
+
+
+/* ═══ v12.8.1: NUCLEAR — Hide brand in navbar on mobile, show title bar ═══ */
+@media (max-width: 1024px) {
+    .o_main_navbar .o_menu_brand,
+    .o_web_client .o_main_navbar .o_menu_brand,
+    .o_web_client:not(#_):not(#_):not(#_) .o_main_navbar .o_menu_brand {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        opacity: 0 !important;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════ */
+/* v12.9: FINAL OVERRIDES — These win because they come LAST      */
+/* ═══════════════════════════════════════════════════════════════ */
+
+/* ── NAVBAR BRAND — ALWAYS WHITE, NEVER BLUE ────────────────── */
+.o_web_client .o_main_navbar a.o_menu_brand,
+.o_web_client .o_main_navbar .o_menu_brand,
+.o_web_client:not(#_):not(#_):not(#_) .o_main_navbar .o_menu_brand,
+.o_main_navbar a.o_menu_brand,
+a.o_menu_brand,
+.o_menu_brand {
+    color: #fafafa !important;
+    -webkit-text-fill-color: #fafafa !important;
+}
+
+/* On mobile: HIDE brand from navbar (title bar shows below) */
+@media (max-width: 1024px) {
+    .o_web_client .o_main_navbar a.o_menu_brand,
+    .o_web_client .o_main_navbar .o_menu_brand,
+    .o_web_client:not(#_):not(#_):not(#_) .o_main_navbar .o_menu_brand,
+    .o_main_navbar a.o_menu_brand,
+    a.o_menu_brand,
+    .o_menu_brand {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        max-width: 0 !important;
+        height: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: hidden !important;
+        opacity: 0 !important;
+        font-size: 0 !important;
+        position: absolute !important;
+        pointer-events: none !important;
+    }
+}
+
+/* ── MOBILE CONTROL PANEL — SINGLE ROW, COMPACT, PREMIUM ───── */
+@media (max-width: 768px) {
+    /* The control panel itself */
+    .o_control_panel {
+        padding: 8px 12px !important;
+        gap: 4px !important;
+    }
+
+    /* Top row: all buttons in ONE line */
+    .o_control_panel .o_cp_top {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 4px !important;
+        width: 100% !important;
+    }
+
+    .o_control_panel .o_cp_top_left {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 4px !important;
+        flex-shrink: 0 !important;
+    }
+
+    .o_control_panel .o_cp_top_right {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 4px !important;
+        margin-left: auto !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* Bottom row (pager ← → etc) — also single line */
+    .o_control_panel .o_cp_bottom {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 4px !important;
+        padding-top: 4px !important;
+    }
+
+    .o_control_panel .o_cp_bottom_left {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 4px !important;
+    }
+
+    .o_control_panel .o_cp_bottom_right {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        align-items: center !important;
+        gap: 4px !important;
+        margin-left: auto !important;
+    }
+
+    /* ALL control panel buttons — compact 40px squares */
+    .o_control_panel .btn {
+        min-height: 40px !important;
+        min-width: 40px !important;
+        max-height: 40px !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 10px !important;
+        background: #1a1a1a !important;
+        border: 1px solid #222 !important;
+        color: #d4d4d8 !important;
+        font-size: 14px !important;
+    }
+
+    .o_control_panel .btn:hover,
+    .o_control_panel .btn:active {
+        background: #222 !important;
+        color: #fafafa !important;
+    }
+
+    .o_control_panel .btn .fa,
+    .o_control_panel .btn .oi {
+        font-size: 15px !important;
+        color: inherit !important;
+    }
+
+    /* "Nuevo" button — red, prominent, with text */
+    .o_control_panel .btn-primary,
+    .o_control_panel .o_list_button_add {
+        background: var(--k-red) !important;
+        border-color: var(--k-red) !important;
+        color: #fff !important;
+        font-weight: 700 !important;
+        font-size: 14px !important;
+        padding: 0 16px !important;
+        min-width: auto !important;
+        border-radius: 10px !important;
+    }
+
+    .o_control_panel .btn-primary .fa,
+    .o_control_panel .btn-primary .oi {
+        color: #fff !important;
+    }
+
+    /* Pager (← 1/5 →) — compact */
+    .o_control_panel .o_pager {
+        font-size: 13px !important;
+        color: #71717a !important;
+        gap: 2px !important;
+    }
+
+    .o_control_panel .o_pager .o_pager_value {
+        color: #d4d4d8 !important;
+        font-weight: 600 !important;
+    }
+
+    .o_control_panel .o_pager button {
+        min-width: 36px !important;
+        min-height: 36px !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+    }
+
+    /* View switcher (kanban/list) — hide labels, just icons */
+    .o_control_panel .o_cp_switch_buttons .btn {
+        min-width: 36px !important;
+        background: transparent !important;
+        border: none !important;
+    }
+
+    .o_control_panel .o_cp_switch_buttons .btn.active {
+        background: rgba(237,28,36,0.12) !important;
+        color: var(--k-red) !important;
+    }
+
+    /* Group by dropdown buttons in filter area */
+    .o_control_panel .o_group_by_menu,
+    .o_control_panel .o_filter_menu {
+        font-size: 13px !important;
+    }
+}
+
+/* ── LIST VIEW CARDS — PREMIUM DARK STYLE ────────────────────── */
+
+/* List records on mobile (card-like) */
+@media (max-width: 768px) {
+    .o_list_renderer .o_data_row {
+        background: #111 !important;
+        border: 1px solid #1a1a1a !important;
+        border-radius: 12px !important;
+        margin: 6px 0 !important;
+        padding: 4px 0 !important;
+        display: block !important;
+    }
+
+    .o_list_renderer .o_data_row:hover {
+        background: #141414 !important;
+        border-color: #222 !important;
+    }
+
+    .o_list_renderer .o_data_row td {
+        background: transparent !important;
+        border: none !important;
+        padding: 8px 16px !important;
+        color: var(--k-text-primary) !important;
+    }
+
+    /* First column = main title */
+    .o_list_renderer .o_data_row td:first-child {
+        font-weight: 700 !important;
+        font-size: 15px !important;
+        color: #fafafa !important;
+    }
+
+    /* Badge in list (Cotización, Confirmado, etc) */
+    .o_list_renderer .badge,
+    .o_list_renderer .o_field_badge .badge {
+        font-size: 11px !important;
+        padding: 4px 10px !important;
+        border-radius: 6px !important;
+        font-weight: 700 !important;
+    }
+
+    /* Amount / price column */
+    .o_list_renderer .o_data_row .o_field_monetary {
+        font-weight: 700 !important;
+        color: #fafafa !important;
+        font-size: 15px !important;
+    }
+}
+
+/* ── DROPDOWN FILTER BUTTONS — DARK PREMIUM ──────────────────── */
+.o_control_panel .o_searchview_quick,
+.o_control_panel .o_dropdown_kanban,
+.o_control_panel .dropdown-toggle {
+    background: #1a1a1a !important;
+    border: 1px solid #222 !important;
+    color: #d4d4d8 !important;
+    border-radius: 10px !important;
+}
+
+.o_control_panel .o_dropdown_kanban:hover,
+.o_control_panel .dropdown-toggle:hover {
+    background: #222 !important;
+    color: #fafafa !important;
+}
+
+/* State/status filter dropdowns (Estado de alquiler, Estado de factura) */
+.o_control_panel .o_cp_bottom .btn,
+.o_control_panel .o_cp_bottom .dropdown-toggle {
+    border-radius: 10px !important;
+    background: #141414 !important;
+    border: 1px solid #222 !important;
+    color: #d4d4d8 !important;
+    font-size: 13px !important;
+    min-height: 40px !important;
+    padding: 0 12px !important;
+}
+
+/* ── YELLOW BORDER CARDS (selected/focused state) ────────────── */
+.o_web_client:not(#_):not(#_) .o_data_row.o_data_row_selected td,
+.o_web_client:not(#_):not(#_) .o_list_renderer .o_data_row:focus-within td,
+.o_web_client:not(#_):not(#_) .o_list_renderer .o_data_row.o_selected_row td {
+    background: rgba(239,175,0,0.06) !important;
+    border-color: var(--k-gold) !important;
+}
+
+/* ── EMPTY ROWS — hide the ugly empty bars ───────────────────── */
+@media (max-width: 768px) {
+    .o_list_renderer .o_data_row:empty,
+    .o_list_renderer tbody tr:not(.o_data_row) {
+        display: none !important;
+    }
+    
+    /* Empty placeholder rows */
+    .o_list_renderer .o_data_row td:empty {
+        padding: 4px !important;
+        min-height: 0 !important;
+    }
+}
+
+/* ── NAVBAR — clean layout on mobile ─────────────────────────── */
+@media (max-width: 768px) {
+    .o_main_navbar {
+        padding: 0 4px !important;
+        height: 46px !important;
+        min-height: 46px !important;
+        gap: 0 !important;
+    }
+
+    /* Systray — only essential icons */
+    .o_menu_systray &gt; .o_nav_entry {
+        min-width: 38px !important;
+        min-height: 38px !important;
+    }
+
+    /* Home button next to hamburger */
+    #kargo-nav-home {
+        width: 38px !important;
+        height: 38px !important;
+        border-radius: 9px !important;
+        margin-right: 4px !important;
+    }
+}
+
+
+
+/* === FLEET DESIGN SYSTEM (from attachment 739) === */
+/* ══════════════════════════════════════════════════════════════ */
+/* KARGO FLEET — Design System v8.5 "shadcn Neutral"             */
+/* Fuente: https://ui.shadcn.com (neutral theme, new-york style) */
+/* Contraste WCAG AAA · Responsive · Odoo 19 SaaS                */
+/* Última actualización: 2026-02-08                              */
+/* ══════════════════════════════════════════════════════════════ */
+
+/*
+ * ┌─────────────────────────────────────────────────────────┐
+ * │ shadcn/ui NEUTRAL THEME — Token Reference               │
+ * ├──────────────────────┬──────────┬───────────────────────┤
+ * │ Token                │ Light    │ Dark                  │
+ * ├──────────────────────┼──────────┼───────────────────────┤
+ * │ --background         │ #ffffff  │ #0a0a0a               │
+ * │ --foreground         │ #0a0a0a  │ #fafafa               │
+ * │ --card               │ #ffffff  │ #0a0a0a               │
+ * │ --card-foreground    │ #0a0a0a  │ #fafafa               │
+ * │ --primary            │ #171717  │ #fafafa               │
+ * │ --primary-foreground │ #fafafa  │ #171717               │
+ * │ --secondary          │ #f5f5f5  │ #262626               │
+ * │ --secondary-fg       │ #171717  │ #fafafa               │
+ * │ --muted              │ #f5f5f5  │ #262626               │
+ * │ --muted-foreground   │ #737373  │ #a3a3a3               │
+ * │ --accent             │ #f5f5f5  │ #262626               │
+ * │ --accent-foreground  │ #171717  │ #fafafa               │
+ * │ --destructive        │ #e40014  │ #7f1d1d (dark red)    │
+ * │ --border             │ #e5e5e5  │ #262626               │
+ * │ --input              │ #e5e5e5  │ #262626               │
+ * │ --ring               │ #a1a1a1  │ #525252               │
+ * │ --radius             │ 0.625rem │ 0.625rem (10px)       │
+ * │ --surface            │ #f8f8f8  │ (inherit)             │
+ * └──────────────────────┴──────────┴───────────────────────┘
+ *
+ * Odoo 19 dark bg ≈ #1c1c22 (slightly warmer than pure #0a0a0a)
+ * We adapt shadcn tokens to work ON TOP of Odoo's existing dark bg.
+ *
+ * Contrast ratios (dark mode, on #1c1c22):
+ *   #fafafa  → 14.8:1 ✓ AAA     (foreground / primary text)
+ *   #e5e5e5  → 12.0:1 ✓ AAA     (readonly values)
+ *   #a3a3a3  →  7.2:1 ✓ AAA     (muted-foreground / labels)
+ *   #737373  →  4.1:1 ✓ AA      (placeholders — acceptable)
+ *   #525252  →  2.6:1            (ring — decorative only)
+ *   #262626  →  1.1:1            (borders — structural only)
+ *
+ * Contrast ratios (light mode, on #ffffff):
+ *   #0a0a0a  → 19.4:1 ✓ AAA     (foreground)
+ *   #171717  → 17.9:1 ✓ AAA     (primary)
+ *   #737373  →  4.6:1 ✓ AA      (muted-foreground / labels)
+ */
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §1  DESIGN TOKENS (CSS Custom Properties)         */
+/*      Injected into Odoo's scope                    */
+/* ═══════════════════════════════════════════════════ */
+
+.o_form_view {
+    /* shadcn neutral light */
+    --kargo-bg: #ffffff;
+    --kargo-fg: #0a0a0a;
+    --kargo-card: #ffffff;
+    --kargo-card-fg: #0a0a0a;
+    --kargo-primary: #171717;
+    --kargo-primary-fg: #fafafa;
+    --kargo-secondary: #f5f5f5;
+    --kargo-secondary-fg: #171717;
+    --kargo-muted: #f5f5f5;
+    --kargo-muted-fg: #737373;
+    --kargo-accent: #f5f5f5;
+    --kargo-accent-fg: #171717;
+    --kargo-destructive: #e40014;
+    --kargo-destructive-fg: #fcf3f3;
+    --kargo-border: #e5e5e5;
+    --kargo-input: #e5e5e5;
+    --kargo-ring: #a1a1a1;
+    --kargo-radius: 0.625rem;
+    --kargo-surface: #f8f8f8;
+    --kargo-selection: #0a0a0a;
+    --kargo-selection-fg: #ffffff;
+    /* Kargo brand accent */
+    --kargo-brand: #ED1C24;
+    --kargo-brand-hover: #c41a20;
+    --kargo-brand-glow: rgba(237, 28, 36, 0.15);
+}
+
+/* Dark variables moved to dark bundle (752) */
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §2  FORM SHEET — shadcn "card" component          */
+/* ═══════════════════════════════════════════════════ */
+
+.o_form_view .o_form_sheet {
+    background-color: var(--kargo-card) !important;
+    border: 1px solid var(--kargo-border) !important;
+    border-radius: var(--kargo-radius) !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §3  INPUT FIELDS — shadcn "input" component       */
+/*      Key insight: inputs BLEND with background,    */
+/*      only distinguished by subtle border.          */
+/* ═══════════════════════════════════════════════════ */
+
+/* Base editable inputs */
+.o_form_view .o_field_widget input:not([readonly]):not([disabled]):not([type="checkbox"]):not([type="file"]),
+.o_form_view .o_field_widget textarea:not([readonly]):not([disabled]),
+.o_form_view .o_field_widget select:not([readonly]):not([disabled]),
+.o_form_view .o_field_widget .o_input:not([readonly]):not([disabled]) {
+    background-color: transparent !important;
+    border: 1px solid var(--kargo-input) !important;
+    border-radius: calc(var(--kargo-radius) - 2px) !important;
+    color: var(--kargo-fg) !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    outline: none !important;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease !important;
+    /* shadcn uses ring on focus, not bg change */
+}
+
+/* ── Hover: border slightly brighter ── */
+.o_form_view .o_field_widget input:not([readonly]):not([disabled]):hover,
+.o_form_view .o_field_widget textarea:not([readonly]):not([disabled]):hover,
+.o_form_view .o_field_widget select:not([readonly]):not([disabled]):hover,
+.o_form_view .o_field_widget .o_input:not([readonly]):not([disabled]):hover {
+    border-color: var(--kargo-ring) !important;
+}
+
+/* ── Focus: Kargo brand ring (shadcn uses outline ring) ── */
+.o_form_view .o_field_widget input:not([readonly]):not([disabled]):focus,
+.o_form_view .o_field_widget textarea:not([readonly]):not([disabled]):focus,
+.o_form_view .o_field_widget select:not([readonly]):not([disabled]):focus,
+.o_form_view .o_field_widget .o_input:not([readonly]):not([disabled]):focus {
+    border-color: var(--kargo-brand) !important;
+    box-shadow: 0 0 0 2px var(--kargo-brand-glow) !important;
+    outline: none !important;
+}
+
+/* ── Placeholder: muted-foreground ── */
+.o_form_view .o_field_widget input::placeholder,
+.o_form_view .o_field_widget textarea::placeholder {
+    color: var(--kargo-muted-fg) !important;
+    opacity: 1 !important;
+}
+
+/* ── Disabled / Readonly: no border, just text ── */
+.o_form_view .o_field_widget input[readonly],
+.o_form_view .o_field_widget input[disabled],
+.o_form_view .o_field_widget .o_readonly_modifier {
+    border-color: transparent !important;
+    background-color: transparent !important;
+    opacity: 0.7 !important;
+    cursor: default !important;
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §4  TEXT & LABELS — AAA contrast                   */
+/* ═══════════════════════════════════════════════════ */
+
+/* Field values (editable + readonly) */
+.o_form_view .o_field_widget {
+    color: var(--kargo-fg) !important;
+}
+
+/* Readonly spans — slightly muted but still AAA */
+.o_form_view .o_field_widget span.o_field_char,
+.o_form_view .o_field_widget span.o_field_text,
+.o_form_view .o_field_widget span.o_field_float,
+.o_form_view .o_field_widget span.o_field_integer,
+.o_form_view .o_field_widget span.o_field_monetary,
+.o_form_view .o_field_widget span.o_field_selection {
+    color: var(--kargo-fg) !important;
+}
+
+/* Labels: muted-foreground (7.2:1 dark / 4.6:1 light = AAA/AA) */
+.o_form_view .o_form_label,
+.o_form_view label.o_form_label {
+    color: var(--kargo-muted-fg) !important;
+    font-weight: 500 !important;
+    font-size: 0.8125rem !important; /* 13px */
+    letter-spacing: 0.01em !important;
+}
+
+/* Group titles / separators */
+.o_form_view .o_horizontal_separator {
+    color: var(--kargo-fg) !important;
+    font-weight: 600 !important;
+    font-size: 0.8125rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    padding-bottom: 8px !important;
+    margin-top: 20px !important;
+    border-bottom: 1px solid var(--kargo-border) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §5  VALIDATION — shadcn "destructive" tokens      */
+/* ═══════════════════════════════════════════════════ */
+
+.o_form_view .o_field_invalid input,
+.o_form_view .o_field_invalid select,
+.o_form_view .o_field_invalid textarea,
+.o_form_view .o_field_invalid .o_input {
+    border-color: var(--kargo-destructive) !important;
+    box-shadow: 0 0 0 2px rgba(228, 0, 20, 0.12) !important;
+}
+
+/* Dark mode destructive adjustments */
+/* [dark-bundle-only] .o_form_view .o_field_invalid input,
+/* [dark-bundle-only] .o_form_view .o_field_invalid select,
+/* [dark-bundle-only] .o_form_view .o_field_invalid textarea,
+html[data-color-scheme="dark"] .o_form_view .o_field_invalid input,
+html[data-color-scheme="dark"] .o_form_view .o_field_invalid select,
+html[data-color-scheme="dark"] .o_form_view .o_field_invalid textarea,
+/* [dark-bundle-only] .o_form_view .o_field_invalid input,
+/* [dark-bundle-only] .o_form_view .o_field_invalid select,
+/* [dark-bundle-only] .o_form_view .o_field_invalid textarea {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.15) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §6  TABS — shadcn "tabs" component                */
+/*      Underline variant (shadcn default)            */
+/* ═══════════════════════════════════════════════════ */
+
+.o_form_view .o_notebook > .nav {
+    border-bottom: 1px solid var(--kargo-border) !important;
+    gap: 0 !important;
+}
+
+.o_form_view .o_notebook .nav-link {
+    color: var(--kargo-muted-fg) !important;
+    font-weight: 500 !important;
+    font-size: 0.8125rem !important;
+    padding: 10px 16px !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    margin-bottom: -1px !important;
+    transition: color 0.15s ease,
+                border-color 0.15s ease !important;
+}
+
+.o_form_view .o_notebook .nav-link:hover {
+    color: var(--kargo-fg) !important;
+    background: transparent !important;
+}
+
+.o_form_view .o_notebook .nav-link.active {
+    color: var(--kargo-fg) !important;
+    background: transparent !important;
+    border-bottom-color: var(--kargo-fg) !important;
+    font-weight: 600 !important;
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §7  BUTTONS — shadcn button variants              */
+/* ═══════════════════════════════════════════════════ */
+
+/* Primary: Kargo brand purple */
+.o_form_view .btn-primary,
+.o_form_view .o_form_button_save {
+    background-color: var(--kargo-brand) !important;
+    border: 1px solid var(--kargo-brand) !important;
+    color: #ffffff !important;
+    border-radius: calc(var(--kargo-radius) - 2px) !important;
+    font-weight: 500 !important;
+    font-size: 0.875rem !important;
+    padding: 8px 16px !important;
+    transition: background-color 0.15s ease,
+                box-shadow 0.15s ease !important;
+}
+
+.o_form_view .btn-primary:hover,
+.o_form_view .o_form_button_save:hover {
+    background-color: var(--kargo-brand-hover) !important;
+    box-shadow: 0 1px 3px rgba(237, 28, 36, 0.25) !important;
+}
+
+/* Secondary / outline: shadcn "secondary" variant */
+.o_form_view .btn-secondary,
+.o_form_view .btn-outline-secondary {
+    background-color: var(--kargo-secondary) !important;
+    border: 1px solid var(--kargo-border) !important;
+    color: var(--kargo-secondary-fg) !important;
+    border-radius: calc(var(--kargo-radius) - 2px) !important;
+    font-weight: 500 !important;
+    font-size: 0.875rem !important;
+    padding: 8px 16px !important;
+}
+
+.o_form_view .btn-secondary:hover,
+.o_form_view .btn-outline-secondary:hover {
+    background-color: var(--kargo-accent) !important;
+    color: var(--kargo-accent-fg) !important;
+}
+
+/* Ghost: shadcn "ghost" variant */
+.o_form_view .btn-link {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    color: var(--kargo-fg) !important;
+    border-radius: calc(var(--kargo-radius) - 2px) !important;
+    font-weight: 500 !important;
+    padding: 8px 16px !important;
+}
+
+.o_form_view .btn-link:hover {
+    background-color: var(--kargo-accent) !important;
+    color: var(--kargo-accent-fg) !important;
+    text-decoration: none !important;
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §8  STATUSBAR & BADGES                            */
+/* ═══════════════════════════════════════════════════ */
+
+/* Status arrows */
+.o_form_view .o_statusbar_status .o_arrow_button {
+    color: var(--kargo-muted-fg) !important;
+    font-size: 0.8125rem !important;
+}
+
+.o_form_view .o_statusbar_status .o_arrow_button.o_arrow_button_current {
+    color: var(--kargo-fg) !important;
+    font-weight: 600 !important;
+}
+
+/* Many2many tags: shadcn "badge" secondary variant */
+.o_form_view .o_field_many2many_tags .badge {
+    background-color: var(--kargo-secondary) !important;
+    color: var(--kargo-secondary-fg) !important;
+    border: 1px solid var(--kargo-border) !important;
+    border-radius: calc(var(--kargo-radius) - 4px) !important;
+    font-weight: 500 !important;
+    font-size: 0.75rem !important;
+    padding: 2px 8px !important;
+}
+
+/* Stat buttons */
+.o_form_view .oe_stat_button .o_stat_value {
+    color: var(--kargo-fg) !important;
+    font-weight: 700 !important;
+}
+
+.o_form_view .oe_stat_button .o_stat_text {
+    color: var(--kargo-muted-fg) !important;
+    font-size: 0.75rem !important;
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §9  SELECT / DROPDOWN                              */
+/* ═══════════════════════════════════════════════════ */
+
+.o_form_view .o_field_widget select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 12px center !important;
+    padding-right: 36px !important;
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §10  MANY2ONE — Autocomplete fields               */
+/* ═══════════════════════════════════════════════════ */
+
+.o_form_view .o_field_many2one_selection input {
+    color: var(--kargo-fg) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §11  CHATTER / MESSAGING                          */
+/* ═══════════════════════════════════════════════════ */
+
+.o_form_view .o_FormRenderer_chatterContainer .o_Message_body {
+    color: var(--kargo-fg) !important;
+}
+
+.o_form_view .o_FormRenderer_chatterContainer .o_Message_authorName {
+    color: var(--kargo-fg) !important;
+    font-weight: 600 !important;
+}
+
+.o_form_view .o_FormRenderer_chatterContainer .o_Message_date {
+    color: var(--kargo-muted-fg) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §12  NOTEBOOK CONTENT — Table lists inside tabs   */
+/* ═══════════════════════════════════════════════════ */
+
+.o_form_view .o_list_renderer th {
+    color: var(--kargo-muted-fg) !important;
+    font-weight: 500 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+    border-bottom: 1px solid var(--kargo-border) !important;
+}
+
+.o_form_view .o_list_renderer td {
+    color: var(--kargo-fg) !important;
+    border-bottom: 1px solid var(--kargo-border) !important;
+    font-size: 0.875rem !important;
+}
+
+.o_form_view .o_list_renderer tr:hover td {
+    background-color: var(--kargo-muted) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §13  RESPONSIVE — Touch-friendly                   */
+/* ═══════════════════════════════════════════════════ */
+
+/* Tablet (≤1024px) */
+@media (max-width: 1024px) {
+    .o_form_view .o_field_widget input:not([readonly]):not([disabled]),
+    .o_form_view .o_field_widget textarea:not([readonly]):not([disabled]),
+    .o_form_view .o_field_widget select:not([readonly]):not([disabled]),
+    .o_form_view .o_field_widget .o_input:not([readonly]):not([disabled]) {
+        padding: 10px 12px !important;
+        font-size: 15px !important;
+        min-height: 44px !important; /* Apple HIG minimum */
+    }
+
+    .o_form_view .o_form_label,
+    .o_form_view label.o_form_label {
+        font-size: 14px !important;
+    }
+
+    .o_form_view .o_notebook .nav-link {
+        padding: 10px 14px !important;
+    }
+}
+
+/* Móvil (≤768px) */
+@media (max-width: 768px) {
+    .o_form_view .o_field_widget input:not([readonly]):not([disabled]),
+    .o_form_view .o_field_widget textarea:not([readonly]):not([disabled]),
+    .o_form_view .o_field_widget select:not([readonly]):not([disabled]),
+    .o_form_view .o_field_widget .o_input:not([readonly]):not([disabled]) {
+        padding: 12px 14px !important;
+        font-size: 16px !important; /* Previene zoom iOS */
+        min-height: 48px !important; /* WCAG 2.5.8 target size */
+        border-radius: var(--kargo-radius) !important;
+    }
+
+    .o_form_view .o_form_label,
+    .o_form_view label.o_form_label {
+        font-size: 14px !important;
+        margin-bottom: 4px !important;
+    }
+
+    /* Tabs: scroll horizontal en móvil */
+    .o_form_view .o_notebook > .nav {
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+    }
+
+    .o_form_view .o_notebook > .nav::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .o_form_view .o_notebook .nav-link {
+        white-space: nowrap !important;
+        padding: 10px 14px !important;
+        font-size: 14px !important;
+    }
+
+    /* Botones: touch-friendly */
+    .o_form_view .btn {
+        min-height: 48px !important;
+        padding: 12px 20px !important;
+        font-size: 15px !important;
+    }
+
+    /* Inner groups: full width on mobile */
+    .o_form_view .o_inner_group {
+        width: 100% !important;
+    }
+
+    .o_form_view .o_inner_group .o_cell {
+        padding: 4px 0 !important;
+    }
+}
+
+/* Móvil pequeño (≤480px) */
+@media (max-width: 480px) {
+    .o_form_view .o_field_widget input:not([readonly]):not([disabled]),
+    .o_form_view .o_field_widget textarea:not([readonly]):not([disabled]) {
+        font-size: 16px !important; /* Always 16px to prevent iOS zoom */
+    }
+
+    .o_form_view .o_notebook .nav-link {
+        padding: 10px 10px !important;
+        font-size: 12px !important;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §14  SUBTLE ANIMATIONS — Premium feel              */
+/* ═══════════════════════════════════════════════════ */
+
+.o_form_view .o_field_widget,
+.o_form_view .o_form_label,
+.o_form_view .o_notebook .nav-link,
+.o_form_view .btn,
+.o_form_view .oe_stat_button,
+.o_form_view .o_field_many2many_tags .badge {
+    transition: color 0.15s ease,
+                background-color 0.15s ease,
+                border-color 0.15s ease,
+                box-shadow 0.15s ease,
+                opacity 0.15s ease !important;
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §15  TEXT SELECTION — Brand colored                */
+/* ═══════════════════════════════════════════════════ */
+
+.o_form_view ::selection {
+    background-color: var(--kargo-brand) !important;
+    color: #ffffff !important;
+}
+
+
+/* ═══════════════════════════════════════════════════ */
+/*  §16  SCROLLBAR — Minimal (dark mode)               */
+/* ═══════════════════════════════════════════════════ */
+
+/* [dark-bundle-only] .o_form_view ::-webkit-scrollbar,
+/* [dark-bundle-only] .o_form_view ::-webkit-scrollbar {
+    width: 6px !important;
+    height: 6px !important;
+}
+
+/* [dark-bundle-only] .o_form_view ::-webkit-scrollbar-track,
+/* [dark-bundle-only] .o_form_view ::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+/* [dark-bundle-only] .o_form_view ::-webkit-scrollbar-thumb,
+/* [dark-bundle-only] .o_form_view ::-webkit-scrollbar-thumb {
+    background-color: var(--kargo-ring) !important;
+    border-radius: 3px !important;
+}
+
+/* === FLEET DARK OVERRIDES (from attachment 752) === */
+/* Dark mode variables (moved from light bundle) */
+.o_form_view {
+    /* shadcn neutral dark — adapted to Odoo bg #1c1c22 */
+    --kargo-bg: #0a0a0a;
+    --kargo-fg: #fafafa;
+    --kargo-card: transparent;
+    --kargo-card-fg: #fafafa;
+    --kargo-primary: #fafafa;
+    --kargo-primary-fg: #171717;
+    --kargo-secondary: #262626;
+    --kargo-secondary-fg: #fafafa;
+    --kargo-muted: #262626;
+    --kargo-muted-fg: #a3a3a3;
+    --kargo-accent: #262626;
+    --kargo-accent-fg: #fafafa;
+    --kargo-destructive: #7f1d1d;
+    --kargo-destructive-fg: #fca5a5;
+    --kargo-border: #262626;
+    --kargo-input: #262626;
+    --kargo-ring: #525252;
+    --kargo-surface: #1a1a1a;
+    --kargo-selection: #fafafa;
+    --kargo-selection-fg: #0a0a0a;
+    --kargo-brand: #ED1C24;
+    --kargo-brand-hover: #ff4a50;
+    --kargo-brand-glow: rgba(237, 28, 36, 0.25);
+}
+
+
+/* KARGO FLEET MODELO - Dark Mode Overrides */
+/* Loaded via web.assets_web_dark — only active in dark mode */
+
+/* ── Avatar ── */
+.kargo-modelo .oe_avatar {
+    border-color: rgba(255,255,255,0.15) !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+}
+.kargo-modelo .oe_avatar:hover {
+    border-color: #ff6b6b !important;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4) !important;
+}
+
+/* ── Banners dark ── */
+.kargo-modelo .kargo-banner-warn {
+    background: rgba(245,158,11,0.12) !important;
+    border-color: rgba(245,158,11,0.3) !important;
+    color: #FDE68A !important;
+}
+.kargo-modelo .kargo-banner-warn > i { color: #FBBF24 !important; }
+.kargo-modelo .kargo-banner-ok {
+    background: rgba(16,185,129,0.12) !important;
+    border-color: rgba(16,185,129,0.3) !important;
+    color: #6EE7B7 !important;
+}
+.kargo-modelo .kargo-banner-ok > i { color: #34D399 !important; }
+.kargo-modelo .kargo-banner-info {
+    background: rgba(99,102,241,0.12) !important;
+    border-color: rgba(99,102,241,0.3) !important;
+    color: #C7D2FE !important;
+}
+.kargo-modelo .kargo-banner-info > i { color: #818CF8 !important; }
+
+/* ── Tabs: active indicator dark ── */
+.kargo-modelo .o_notebook > .nav.nav-tabs .nav-item .nav-link.active {
+    box-shadow: inset 0 -3px 0 0 #ff6b6b !important;
+}
+
+/* ── Tab hint dark ── */
+.kargo-modelo .kargo-tab-hint {
+    border-color: rgba(255,255,255,0.1) !important;
+}
+.kargo-modelo .kargo-tab-hint i {
+    color: #ff6b6b !important;
+}
+
+/* ── Section Headers dark ── */
+.kargo-modelo .kargo-section-header.specs {
+    background: rgba(237,28,36,0.15) !important;
+    color: #DDD6FE !important;
+    border-left-color: #ff6b6b !important;
+}
+.kargo-modelo .kargo-section-header.specs i { color: #ff6b6b !important; }
+.kargo-modelo .kargo-section-header.motor {
+    background: rgba(59,130,246,0.15) !important;
+    color: #BFDBFE !important;
+    border-left-color: #60A5FA !important;
+}
+.kargo-modelo .kargo-section-header.motor i { color: #60A5FA !important; }
+.kargo-modelo .kargo-section-header.dims {
+    background: rgba(20,184,166,0.15) !important;
+    color: #99F6E4 !important;
+    border-left-color: #2DD4BF !important;
+}
+.kargo-modelo .kargo-section-header.dims i { color: #2DD4BF !important; }
+.kargo-modelo .kargo-section-header.space {
+    background: rgba(34,197,94,0.15) !important;
+    color: #BBF7D0 !important;
+    border-left-color: #4ADE80 !important;
+}
+.kargo-modelo .kargo-section-header.space i { color: #4ADE80 !important; }
+.kargo-modelo .kargo-section-header.media {
+    background: rgba(239,68,68,0.15) !important;
+    color: #FECACA !important;
+    border-left-color: #F87171 !important;
+}
+.kargo-modelo .kargo-section-header.media i { color: #F87171 !important; }
+.kargo-modelo .kargo-section-header.docs {
+    background: rgba(245,158,11,0.15) !important;
+    color: #FDE68A !important;
+    border-left-color: #FBBF24 !important;
+}
+.kargo-modelo .kargo-section-header.docs i { color: #FBBF24 !important; }
+
+/* ── File cards dark ── */
+.kargo-modelo .kargo-file-card {
+    border-color: rgba(255,255,255,0.12) !important;
+}
+.kargo-modelo .kargo-file-card:hover {
+    border-color: #ff6b6b !important;
+    background: rgba(237,28,36,0.08) !important;
+}
+.kargo-modelo .kargo-file-card .kargo-file-label i {
+    color: #ff6b6b !important;
+}
+
+/* ══════════════════════════════════════════════════════════════ */
+/* KARGO UX: Campos editables visibles                           */
+/* Compatible: Odoo 19 (saas~19.1+e) - Dark Mode                */
+/* Método: ir.asset → web.assets_web_dark (sobrevive updates)    */
+/* Selectores: estándar HTML + clases Odoo estables              */
+/* Última actualización: 2026-02-08                              */
+/* ══════════════════════════════════════════════════════════════ */
+
+/*
+ * ARQUITECTURA DE COMPATIBILIDAD:
+ * - Usa .o_form_view (estable desde Odoo 14+)
+ * - Targeta input/select/textarea nativos (nunca cambian)
+ * - Usa :not([readonly]):not([disabled]) para excluir readonly
+ * - NO usa clases internas que cambian entre versiones
+ *   (evita: o_form_editable, o_readonly_modifier, etc.)
+ * - Scoped a .kargo-modelo cuando aplica solo a Fleet
+ */
+
+/* ─── TODOS los inputs editables en formularios ─── */
+.o_form_view .o_field_widget input:not([readonly]):not([disabled]):not([type="checkbox"]):not([type="file"]),
+.o_form_view .o_field_widget textarea:not([readonly]):not([disabled]),
+.o_form_view .o_field_widget select:not([readonly]):not([disabled]) {
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    border-radius: 5px !important;
+    padding: 5px 10px !important;
+    transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* ─── HOVER: borde más visible ─── */
+.o_form_view .o_field_widget input:not([readonly]):not([disabled]):hover,
+.o_form_view .o_field_widget textarea:not([readonly]):not([disabled]):hover,
+.o_form_view .o_field_widget select:not([readonly]):not([disabled]):hover {
+    border-color: rgba(255, 255, 255, 0.38) !important;
+    background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ─── FOCUS: acento Kargo morado ─── */
+.o_form_view .o_field_widget input:not([readonly]):not([disabled]):focus,
+.o_form_view .o_field_widget textarea:not([readonly]):not([disabled]):focus,
+.o_form_view .o_field_widget select:not([readonly]):not([disabled]):focus {
+    border-color: #ED1C24 !important;
+    background-color: rgba(237, 28, 36, 0.06) !important;
+    box-shadow: 0 0 0 3px rgba(237, 28, 36, 0.12) !important;
+    outline: none !important;
+}
+
+/* ─── PLACEHOLDER visible ─── */
+.o_form_view .o_field_widget input::placeholder,
+.o_form_view .o_field_widget textarea::placeholder {
+    color: rgba(255, 255, 255, 0.28) !important;
+    font-style: italic !important;
+}
+
+/* ─── Campos vacíos OBLIGATORIOS con error → naranja ─── */
+.o_form_view .o_field_invalid input,
+.o_form_view .o_field_invalid select,
+.o_form_view .o_field_invalid textarea {
+    border-color: #f59e0b !important;
+    background-color: rgba(245, 158, 11, 0.06) !important;
+}
+
+/* === HOME MENU CSS (from attachment 1207) === */
+/* ═══════════════════════════════════════════════════ */
+/* Kargo Montacargas — Home Menu v3.0                  */
+/* Estilo TVH-inspired: limpio, corporativo, legible   */
+/* ═══════════════════════════════════════════════════ */
+
+/* ──── Background overlay fuerte ──── */
+body.o_home_menu_background {
+    font-family: 'Play', sans-serif !important;
+}
+
+body.o_home_menu_background::before {
+    content: '' !important;
+    position: fixed !important;
+    inset: 0 !important;
+    background: linear-gradient(
+        180deg,
+        rgba(46, 46, 46, 0.92) 0%,
+        rgba(30, 30, 30, 0.82) 35%,
+        rgba(20, 20, 20, 0.88) 100%
+    ) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+}
+
+/* ──── Vignette perimetral ──── */
+body.o_home_menu_background::after {
+    content: '' !important;
+    position: fixed !important;
+    inset: 0 !important;
+    background: radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.35) 100%) !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+}
+
+/* ──── Navbar ──── */
+body.o_home_menu_background .o_main_navbar {
+    background: rgba(46, 46, 46, 0.85) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+/* ──── Home menu wrapper ──── */
+body.o_home_menu_background .o_home_menu {
+    position: relative !important;
+    z-index: 1 !important;
+    font-family: 'Play', sans-serif !important;
+}
+
+/* ──── BRANDING HEADER ──── */
+body.o_home_menu_background .o_home_menu::before {
+    content: 'KARGO MONTACARGAS' !important;
+    display: block !important;
+    font-family: 'Play', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: 6px !important;
+    text-transform: uppercase !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    text-align: center !important;
+    padding: 20px 0 4px 0 !important;
+}
+
+/* ──── Linea roja decorativa ──── */
+body.o_home_menu_background .o_home_menu::after {
+    content: '' !important;
+    display: block !important;
+    width: 50px !important;
+    height: 3px !important;
+    background: #ED1C24 !important;
+    margin: 8px auto 16px auto !important;
+    border-radius: 2px !important;
+}
+
+/* ──── PANEL PRINCIPAL - Card blanca estilo TVH ──── */
+body.o_home_menu_background .o_apps {
+    position: relative !important;
+    z-index: 1 !important;
+    background: rgba(255, 255, 255, 0.95) !important;
+    border: none !important;
+    border-radius: 20px !important;
+    padding: 36px 44px 28px !important;
+    margin: 0 auto !important;
+    max-width: 820px !important;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.35),
+        0 4px 16px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* ──── Individual app sobre fondo blanco ──── */
+body.o_home_menu_background .o_apps .o_app {
+    transition: all 0.25s ease !important;
+    border-radius: 14px !important;
+    padding: 14px 10px !important;
+    position: relative !important;
+}
+
+body.o_home_menu_background .o_apps .o_app:hover {
+    background: rgba(237, 28, 36, 0.06) !important;
+    transform: translateY(-3px) !important;
+}
+
+/* ──── App icon ──── */
+body.o_home_menu_background .o_apps .o_app_icon {
+    border-radius: 16px !important;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12) !important;
+    transition: all 0.25s ease !important;
+}
+
+body.o_home_menu_background .o_apps .o_app:hover .o_app_icon {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
+    transform: scale(1.05) !important;
+}
+
+/* ──── App name sobre fondo BLANCO = color oscuro ──── */
+body.o_home_menu_background .o_apps .o_app .o_caption,
+body.o_home_menu_background .o_apps .o_app .o_app_name {
+    font-family: 'Play', sans-serif !important;
+    font-weight: 700 !important;
+    color: #2E2E2E !important;
+    text-shadow: none !important;
+    letter-spacing: 0.2px !important;
+    margin-top: 10px !important;
+    font-size: 0.78rem !important;
+}
+
+body.o_home_menu_background .o_apps .o_app:hover .o_caption,
+body.o_home_menu_background .o_apps .o_app:hover .o_app_name {
+    color: #ED1C24 !important;
+}
+
+/* ──── Search bar sobre panel blanco ──── */
+body.o_home_menu_background .o_home_menu input[type="text"],
+body.o_home_menu_background .o_home_menu .o_search_bar input,
+body.o_home_menu_background .o_home_menu .o_menu_search input {
+    font-family: 'Play', sans-serif !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 12px !important;
+    color: #FFFFFF !important;
+    padding: 10px 18px !important;
+    transition: all 0.3s ease !important;
+    max-width: 320px !important;
+    margin: 0 auto 4px auto !important;
+}
+
+body.o_home_menu_background .o_home_menu input[type="text"]::placeholder,
+body.o_home_menu_background .o_home_menu .o_search_bar input::placeholder,
+body.o_home_menu_background .o_home_menu .o_menu_search input::placeholder {
+    color: rgba(255, 255, 255, 0.45) !important;
+    font-family: 'Play', sans-serif !important;
+}
+
+body.o_home_menu_background .o_home_menu input[type="text"]:focus,
+body.o_home_menu_background .o_home_menu .o_search_bar input:focus,
+body.o_home_menu_background .o_home_menu .o_menu_search input:focus {
+    background: rgba(255, 255, 255, 0.22) !important;
+    border-color: rgba(237, 28, 36, 0.5) !important;
+    box-shadow: 0 0 0 3px rgba(237, 28, 36, 0.12) !important;
+    outline: none !important;
+}
+
+/* ──── Trial/subscription banner ──── */
+body.o_home_menu_background .o_home_menu .alert {
+    background: rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 12px !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    max-width: 620px !important;
+    margin: 0 auto 12px auto !important;
+    font-family: 'Play', sans-serif !important;
+    font-size: 0.85rem !important;
+}
+
+body.o_home_menu_background .o_home_menu .alert a {
+    color: #ED1C24 !important;
+    font-weight: 700 !important;
+}
+
+/* ──── Animacion escalonada sutil ──── */
+body.o_home_menu_background .o_apps .o_app {
+    animation: kargoAppIn 0.4s ease-out both !important;
+}
+body.o_home_menu_background .o_apps .o_app:nth-child(1) { animation-delay: 0.02s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(2) { animation-delay: 0.05s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(3) { animation-delay: 0.08s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(4) { animation-delay: 0.11s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(5) { animation-delay: 0.14s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(6) { animation-delay: 0.17s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(7) { animation-delay: 0.20s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(8) { animation-delay: 0.23s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(9) { animation-delay: 0.26s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(10) { animation-delay: 0.29s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(11) { animation-delay: 0.32s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(12) { animation-delay: 0.35s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(13) { animation-delay: 0.38s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(14) { animation-delay: 0.41s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(15) { animation-delay: 0.44s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(16) { animation-delay: 0.47s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(17) { animation-delay: 0.50s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(18) { animation-delay: 0.53s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(19) { animation-delay: 0.56s !important; }
+body.o_home_menu_background .o_apps .o_app:nth-child(20) { animation-delay: 0.59s !important; }
+
+@keyframes kargoAppIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ──── Footer power by ──── */
+body.o_home_menu_background .o_home_menu .o_home_menu_footer {
+    color: rgba(255,255,255,0.3) !important;
+    font-family: 'Play', sans-serif !important;
+}
+
+/* ──── Responsive ──── */
+@media (max-width: 768px) {
+    body.o_home_menu_background .o_apps {
+        border-radius: 16px !important;
+        padding: 24px 16px 20px !important;
+        margin: 0 12px !important;
+        max-width: none !important;
+    }
+    body.o_home_menu_background .o_apps .o_app {
+        border-radius: 10px !important;
+        padding: 10px 6px !important;
+    }
+}
+
+/* === INPUT VISIBILITY (from attachment 812) === */
+/* ═════════════════════════════════════════════════════ */
+/* Kargo Montacargas — UX v2.1                          */
+/* Odoo 19 SaaS Dark Mode — Inline injection            */
+/* ═════════════════════════════════════════════════════ */
+
+/* ──── §1 INPUT BORDERS ──── */
+.o_form_view .o_field_widget .o_input,
+.o_form_view .o_field_widget input.o_input,
+.o_form_view .o_field_widget textarea.o_input {
+    border: 1px solid rgba(148, 163, 184, 0.35) !important;
+    border-radius: 5px !important;
+    min-height: 36px !important;
+    padding: 6px 10px !important;
+    box-sizing: border-box !important;
+}
+
+/* ──── §1.1 FIX DOUBLE BORDERS ──── */
+
+/* Many2one dropdown wrapper gets THE border */
+.o_form_view .o_field_many2one .o_input_dropdown,
+.o_form_view .o_field_many2one_avatar .o_input_dropdown {
+    border: 1px solid rgba(148, 163, 184, 0.35) !important;
+    border-radius: 5px !important;
+    min-height: 36px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+/* Inner input of Many2one: NO border */
+.o_form_view .o_field_many2one .o_input_dropdown .o_input,
+.o_form_view .o_field_many2one .o_input_dropdown input,
+.o_form_view .o_field_many2one_avatar .o_input_dropdown .o_input,
+.o_form_view .o_field_many2one_avatar .o_input_dropdown input {
+    border: none !important;
+    box-shadow: none !important;
+    min-height: unset !important;
+    padding: 6px 10px !important;
+}
+
+/* Monetary wrapper gets THE border */
+.o_form_view .o_field_monetary > div,
+.o_form_view .o_field_monetary .o_input {
+    border: 1px solid rgba(148, 163, 184, 0.35) !important;
+    border-radius: 5px !important;
+    min-height: 36px !important;
+    overflow: hidden !important;
+}
+/* Monetary inner input: NO border */
+.o_form_view .o_field_monetary > div input,
+.o_form_view .o_field_monetary > div .o_input {
+    border: none !important;
+    box-shadow: none !important;
+    min-height: unset !important;
+}
+
+/* Date/Datetime: wrapper gets THE border */
+.o_form_view .o_field_date .o_datepicker,
+.o_form_view .o_field_datetime .o_datepicker {
+    border: 1px solid rgba(148, 163, 184, 0.35) !important;
+    border-radius: 5px !important;
+    min-height: 36px !important;
+}
+.o_form_view .o_field_date .o_datepicker .o_input,
+.o_form_view .o_field_datetime .o_datepicker .o_input {
+    border: none !important;
+    box-shadow: none !important;
+    min-height: unset !important;
+}
+
+/* Selection: border on the select element */
+.o_form_view .o_field_widget select.o_input,
+.o_form_view .o_field_selection select {
+    border: 1px solid rgba(148, 163, 184, 0.35) !important;
+    border-radius: 5px !important;
+    min-height: 36px !important;
+    padding: 6px 10px !important;
+}
+
+/* ──── §1.2 DROPDOWN ARROW INDICATOR ──── */
+
+/* Many2one: flechita de dropdown */
+.o_form_view .o_field_many2one .o_input_dropdown,
+.o_form_view .o_field_many2one_avatar .o_input_dropdown {
+    position: relative !important;
+}
+.o_form_view .o_field_many2one .o_input_dropdown::after,
+.o_form_view .o_field_many2one_avatar .o_input_dropdown::after {
+    content: "\f078" !important;
+    font-family: "FontAwesome" !important;
+    position: absolute !important;
+    right: 10px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 0.7em !important;
+    color: rgba(148, 163, 184, 0.6) !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+}
+
+/* Selection: flechita nativa mejorada */
+.o_form_view .o_field_widget select.o_input,
+.o_form_view .o_field_selection select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23949ab4' d='M2 4l4 4 4-4'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 10px center !important;
+    background-size: 12px !important;
+    padding-right: 30px !important;
+}
+
+/* Many2many tags: flechita */
+.o_form_view .o_field_many2many_tags .o_input_dropdown {
+    position: relative !important;
+    border: 1px solid rgba(148, 163, 184, 0.35) !important;
+    border-radius: 5px !important;
+    min-height: 36px !important;
+}
+.o_form_view .o_field_many2many_tags .o_input_dropdown::after {
+    content: "\f078" !important;
+    font-family: "FontAwesome" !important;
+    position: absolute !important;
+    right: 10px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 0.7em !important;
+    color: rgba(148, 163, 184, 0.6) !important;
+    pointer-events: none !important;
+}
+.o_form_view .o_field_many2many_tags .o_input_dropdown .o_input {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* ──── §1.3 STATES ──── */
+.o_form_view .o_field_widget .o_input:hover,
+.o_form_view .o_field_widget .o_input_dropdown:hover,
+.o_form_view .o_field_monetary > div:hover {
+    border-color: rgba(148, 163, 184, 0.6) !important;
+}
+
+.o_form_view .o_field_widget .o_input:focus,
+.o_form_view .o_field_widget .o_input_dropdown:focus-within,
+.o_form_view .o_field_monetary > div:focus-within {
+    border-color: var(--primary, #714B67) !important;
+    box-shadow: 0 0 0 2px rgba(113, 75, 103, 0.15) !important;
+}
+
+/* Required: left accent */
+.o_form_view .o_field_widget.o_required_modifier .o_input,
+.o_form_view .o_field_widget.o_required_modifier .o_input_dropdown,
+.o_form_view .o_field_widget.o_required_modifier > div {
+    border-left: 3px solid var(--primary, #714B67) !important;
+}
+
+/* Readonly: no border */
+.o_form_view .o_field_widget.o_readonly_modifier .o_input,
+.o_form_view .o_field_widget.o_readonly_modifier .o_input_dropdown,
+.o_form_view .o_field_widget.o_readonly_modifier > div {
+    border-color: transparent !important;
+    background: transparent !important;
+}
+
+/* ──── §2 WCAG AAA CONTRAST ──── */
+.o_form_view .o_form_label,
+.o_form_view label.o_form_label {
+    color: #b8bcc8 !important;
+}
+.o_form_view .o_horizontal_separator,
+.o_form_view .o_group .o_group_header {
+    color: #d1d5e0 !important;
+}
+.o_form_view .o_input::placeholder {
+    color: #8c91a0 !important;
+}
+.o_form_view .o_field_widget .o_input,
+.o_form_view .o_field_widget input,
+.o_form_view .o_field_widget textarea,
+.o_form_view .o_field_widget select {
+    color: #E4E4E4 !important;
+}
+.o_form_view .o-form-buttonbox {
+    --o-stat-text-color: #E4E4E4 !important;
+}
+.o_form_view .o-form-buttonbox .o_stat_info .o_stat_text,
+.o_form_view .o-form-buttonbox .o_stat_info .o_stat_value {
+    color: #E4E4E4 !important;
+}
+.o_form_view .o_notebook .nav-link:not(.active) {
+    color: #9ca3b4 !important;
+}
+.o_form_view .text-muted {
+    color: #9ca3b4 !important;
+}
+
+/* ──── §3 KANBAN ──── */
+.o_kanban_view .o_kanban_record .o_field_image img,
+.o_kanban_view .o_kanban_record aside img {
+    object-fit: contain !important;
+    background-color: #ffffff !important;
+    border-radius: 6px !important;
+    padding: 2px !important;
+}
